@@ -1,0 +1,17 @@
+filename: "mock_{{.SrcPackageName | snakecase}}_{{.InterfaceName | snakecase}}.go"
+dir: "test/mocks"
+pkgname: "mocks"
+packages:
+  github.com/Sokol111/ecommerce-category-service/internal/category:
+    interfaces:
+      collection:
+        config:
+          structname: MockCategoryCollection
+      Store:
+        config:
+          structname: MockCategoryStore
+  github.com/Sokol111/ecommerce-category-service/pkg/category:
+    interfaces:
+      Service:
+        config:
+          structname: MockCategoryService

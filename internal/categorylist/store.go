@@ -68,7 +68,7 @@ func (s *store) GetAllEnabled(ctx context.Context) (*model.CategoryListViewDTO, 
 		}
 		categories = append(categories, model.CategoryDTO{ID: doc.ID, Name: doc.Name})
 	}
-	return &model.CategoryListViewDTO{categories}, nil
+	return &model.CategoryListViewDTO{Categories: categories}, nil
 }
 
 func (s *store) log(ctx context.Context) *zap.Logger {

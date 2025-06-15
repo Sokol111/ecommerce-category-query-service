@@ -2,42 +2,27 @@ package http
 
 import (
 	"context"
-	"errors"
 	"net/http"
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/api"
-	"github.com/Sokol111/ecommerce-category-query-service/pkg/category"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/categorylist"
 )
 
 type categoryHandler struct {
-	service category.Service
+	categoryListService categorylist.Service
 }
 
-func newCategoryHandler(service category.Service) api.StrictServerInterface {
+func newCategoryHandler(service categorylist.Service) api.StrictServerInterface {
 	return &categoryHandler{service}
 }
 
-func (h *categoryHandler) GetCategoryById(c context.Context, request api.GetCategoryByIdRequestObject) (api.GetCategoryByIdResponseObject, error) {
-	found, err := h.service.GetById(c, request.Id)
-	if errors.Is(err, category.NotFoundError) {
-		return api.GetCategoryById404JSONResponse{Code: 404, Message: "Category not found"}, nil
-	}
+func (h *categoryHandler) GetAllActiveCategories(c context.Context, _ api.GetAllActiveCategoriesRequestObject) (api.GetAllActiveCategoriesResponseObject, error) {
+	dto, err := h.categoryListService.GetActiveCategories(c)
 	if err != nil {
-		return api.GetCategoryById500JSONResponse{Code: 500, Message: http.StatusText(500)}, err
+		return api.GetAllActiveCategories500JSONResponse{Code: 500, Message: http.StatusText(500)}, err
 	}
-	return api.GetCategoryById200JSONResponse{
-		Id:   found.ID,
-		Name: found.Name,
-	}, nil
-}
-
-func (h *categoryHandler) GetAll(c context.Context, _ api.GetAllRequestObject) (api.GetAllResponseObject, error) {
-	categories, err := h.service.GetAll(c)
-	if err != nil {
-		return api.GetAll500JSONResponse{Code: 500, Message: http.StatusText(500)}, err
-	}
-	response := make(api.GetAll200JSONResponse, 0, len(categories))
-	for _, u := range categories {
+	response := make(api.GetAllActiveCategories200JSONResponse, 0, len(dto.Categories))
+	for _, u := range dto.Categories {
 		response = append(response, api.CategoryResponse{
 			Id:   u.ID,
 			Name: u.Name,

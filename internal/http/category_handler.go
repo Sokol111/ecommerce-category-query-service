@@ -5,14 +5,14 @@ import (
 	"net/http"
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/api"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/categorylist"
+	"github.com/Sokol111/ecommerce-category-query-service/pkg/model"
 )
 
 type categoryHandler struct {
-	categoryListService categorylist.Service
+	categoryListService model.CategoryListService
 }
 
-func newCategoryHandler(service categorylist.Service) api.StrictServerInterface {
+func newCategoryHandler(service model.CategoryListService) api.StrictServerInterface {
 	return &categoryHandler{service}
 }
 

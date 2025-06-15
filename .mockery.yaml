@@ -2,7 +2,7 @@ filename: "mock_{{.SrcPackageName | snakecase}}_{{.InterfaceName | snakecase}}.g
 dir: "test/mocks"
 pkgname: "mocks"
 packages:
-  github.com/Sokol111/ecommerce-category-service/internal/category:
+  github.com/Sokol111/ecommerce-category-query-service/internal/categorylist:
     interfaces:
       collection:
         config:
@@ -10,8 +10,8 @@ packages:
       Store:
         config:
           structname: MockCategoryStore
-  github.com/Sokol111/ecommerce-category-service/pkg/category:
+  github.com/Sokol111/ecommerce-category-query-service/pkg/model:
     interfaces:
-      Service:
+      CategoryListService:
         config:
-          structname: MockCategoryService
+          structname: MockCategoryListService

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/Sokol111/ecommerce-category-query-service/pkg/model"
 	"github.com/Sokol111/ecommerce-commons/pkg/logger"
 	"github.com/Sokol111/ecommerce-commons/pkg/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -14,7 +15,7 @@ import (
 type Store interface {
 	Upsert(ctx context.Context, id string, name string, version int, enabled bool) error
 
-	GetAllEnabled(ctx context.Context) (*CategoryListViewDTO, error)
+	GetAllEnabled(ctx context.Context) (*model.CategoryListViewDTO, error)
 }
 
 type store struct {
@@ -49,14 +50,14 @@ func (s *store) Upsert(ctx context.Context, id string, name string, version int,
 	return nil
 }
 
-func (s *store) GetAllEnabled(ctx context.Context) (*CategoryListViewDTO, error) {
+func (s *store) GetAllEnabled(ctx context.Context) (*model.CategoryListViewDTO, error) {
 	cursor, err := s.wrapper.Coll.Find(ctx, bson.M{"enabled": true})
 	if err != nil {
 		return nil, fmt.Errorf("failed to get active categories: %w", err)
 	}
 	defer cursor.Close(ctx)
 
-	var categories []CategoryDTO
+	var categories []model.CategoryDTO
 	for cursor.Next(ctx) {
 		var doc struct {
 			ID   string `bson:"_id"`
@@ -65,9 +66,9 @@ func (s *store) GetAllEnabled(ctx context.Context) (*CategoryListViewDTO, error)
 		if err := cursor.Decode(&doc); err != nil {
 			return nil, fmt.Errorf("failed to decode category: %w", err)
 		}
-		categories = append(categories, CategoryDTO{ID: doc.ID, Name: doc.Name})
+		categories = append(categories, model.CategoryDTO{ID: doc.ID, Name: doc.Name})
 	}
-	return &CategoryListViewDTO{categories}, nil
+	return &model.CategoryListViewDTO{categories}, nil
 }
 
 func (s *store) log(ctx context.Context) *zap.Logger {

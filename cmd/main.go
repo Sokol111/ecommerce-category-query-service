@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 
+	"github.com/Sokol111/ecommerce-category-query-service/internal/categorylist"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/http"
 	"github.com/Sokol111/ecommerce-commons/pkg/module"
 	"go.uber.org/fx"
@@ -12,6 +13,7 @@ import (
 var AppModules = fx.Options(
 	module.NewInfraModule(),
 	module.NewKafkaModule(),
+	categorylist.NewCategoryListViewModule(),
 	http.NewHttpHandlerModule(),
 )
 

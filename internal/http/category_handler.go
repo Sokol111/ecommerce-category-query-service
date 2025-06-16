@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/api"
-	"github.com/Sokol111/ecommerce-category-query-service/pkg/model"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/model"
 )
 
 type categoryHandler struct {

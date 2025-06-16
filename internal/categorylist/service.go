@@ -3,7 +3,7 @@ package categorylist
 import (
 	"context"
 
-	"github.com/Sokol111/ecommerce-category-query-service/pkg/model"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/model"
 	"github.com/Sokol111/ecommerce-commons/pkg/event"
 	"github.com/Sokol111/ecommerce-commons/pkg/event/payload"
 )

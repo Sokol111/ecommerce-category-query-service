@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/Sokol111/ecommerce-category-query-service/pkg/model"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/model"
 	"github.com/Sokol111/ecommerce-commons/pkg/logger"
 	"github.com/Sokol111/ecommerce-commons/pkg/mongo"
 	"go.mongodb.org/mongo-driver/bson"

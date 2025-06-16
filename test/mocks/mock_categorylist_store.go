@@ -7,7 +7,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/Sokol111/ecommerce-category-query-service/pkg/model"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/model"
 	mock "github.com/stretchr/testify/mock"
 )
 

@@ -10,7 +10,7 @@ packages:
       Store:
         config:
           structname: MockCategoryStore
-  github.com/Sokol111/ecommerce-category-query-service/pkg/model:
+  github.com/Sokol111/ecommerce-category-query-service/internal/model:
     interfaces:
       CategoryListService:
         config:

@@ -20,8 +20,8 @@ func provideCollection(lc fx.Lifecycle, m mongo.Mongo) (*mongo.CollectionWrapper
 	wrapper := &mongo.CollectionWrapper[collection]{}
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
-			wrapper.Coll = m.GetCollection("categorylist")
-			err := m.CreateSimpleIndex(ctx, "categorylist", bson.D{{Key: "enabled", Value: 1}})
+			wrapper.Coll = m.GetCollection("category_list")
+			err := m.CreateSimpleIndex(ctx, "category_list", bson.D{{Key: "enabled", Value: 1}})
 			if err != nil {
 				return err
 			}

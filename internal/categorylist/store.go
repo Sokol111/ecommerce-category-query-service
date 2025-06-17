@@ -24,7 +24,7 @@ type store struct {
 }
 
 func newStore(wrapper *mongo.CollectionWrapper[collection], logger *zap.Logger) Store {
-	return &store{wrapper, logger.With(zap.String("component", "categorylist-store"))}
+	return &store{wrapper, logger.With(zap.String("component", "category-list-store"))}
 }
 
 func (s *store) Upsert(ctx context.Context, id string, name string, version int, enabled bool) error {

@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+mongo:
+  host: "localhost"
+  port: 27017
+  replica-set: rs0
+  #  username: "root"
+  #  password: "password"
+  database: "category-query"
+
+kafka:
+  brokers: "localhost:9092"
+  consumers:
+    - handler: "categoryCreatedHandler"
+      topic: "catalog.category.created.v1"
+      group-id: "ecommerce-category-query-service"
+      auto-offset-reset: "earliest"
+    - handler: "categoryUpdatedHandler"
+      topic: "catalog.category.updated.v1"
+      group-id: "ecommerce-category-query-service"
+      auto-offset-reset: "earliest"

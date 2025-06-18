@@ -2,8 +2,8 @@ package kafka
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/Sokol111/ecommerce-category-query-service/internal/model"
 	"github.com/Sokol111/ecommerce-commons/pkg/event"
 	"github.com/Sokol111/ecommerce-commons/pkg/event/payload"
 	"github.com/Sokol111/ecommerce-commons/pkg/kafka/consumer"
@@ -11,18 +11,19 @@ import (
 )
 
 type categoryUpdatedHandler struct {
-	log *zap.Logger
+	service model.CategoryListService
+	log     *zap.Logger
 }
 
-func newCategoryUpdatedHandler(log *zap.Logger) consumer.Handler[payload.CategoryUpdated] {
+func newCategoryUpdatedHandler(service model.CategoryListService, log *zap.Logger) consumer.Handler[payload.CategoryUpdated] {
 	return &categoryUpdatedHandler{
-		log: log,
+		service: service,
+		log:     log,
 	}
 }
 
 func (h *categoryUpdatedHandler) Process(ctx context.Context, e *event.Event[payload.CategoryUpdated]) error {
-	h.log.Info("message received", zap.String("message", fmt.Sprintf("%v", e)))
-	return nil
+	return h.service.ProcessCategoryUpdatedEvent(ctx, e)
 }
 
 func (h *categoryUpdatedHandler) Validate(payload *payload.CategoryUpdated) error {

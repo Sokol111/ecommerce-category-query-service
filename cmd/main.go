@@ -5,6 +5,7 @@ import (
 
 	"github.com/Sokol111/ecommerce-category-query-service/internal/categorylist"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/http"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/kafka"
 	"github.com/Sokol111/ecommerce-commons/pkg/module"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
@@ -15,6 +16,7 @@ var AppModules = fx.Options(
 	module.NewKafkaModule(),
 	categorylist.NewCategoryListViewModule(),
 	http.NewHttpHandlerModule(),
+	kafka.NewKafkaHandlerModule(),
 )
 
 func main() {

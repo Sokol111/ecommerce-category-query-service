@@ -18,6 +18,8 @@ github.com/Sokol111/ecommerce-commons v0.1.25 h1:xId4FlqAcePFK333Dmk2gsk8Hw/A5i2
 github.com/Sokol111/ecommerce-commons v0.1.25/go.mod h1:FFTk/K7bRmGqno322NO2LP3CmBNO2PifwE8/LHF314c=
 github.com/Sokol111/ecommerce-commons v0.1.29 h1:g14wDjnLkszrKUIVLbZL+Un0JiMZjvQs4wVNlD1D7Ww=
 github.com/Sokol111/ecommerce-commons v0.1.29/go.mod h1:FFTk/K7bRmGqno322NO2LP3CmBNO2PifwE8/LHF314c=
+github.com/Sokol111/ecommerce-commons v0.1.30 h1:3EJJLUrpWUFMInZRkJS4/L8jTZIIKHK8+UJ2FQXqdWc=
+github.com/Sokol111/ecommerce-commons v0.1.30/go.mod h1:FFTk/K7bRmGqno322NO2LP3CmBNO2PifwE8/LHF314c=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d h1:licZJFw2RwpHMqeKTCYkitsPqHNxTmd4SNR5r94FGM8=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d/go.mod h1:asat636LX7Bqt5lYEZ27JNDcqxfjdBQuJ/MM4CN/Lzo=
 github.com/aws/aws-sdk-go-v2 v1.26.1 h1:5554eUqIYVWpU0YmeeYZ0wU64H2VLBs8TlhRB2L+EkA=

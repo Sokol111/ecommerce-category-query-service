@@ -3,20 +3,21 @@ module github.com/Sokol111/ecommerce-category-query-service
 go 1.24.2
 
 require (
-	github.com/Sokol111/ecommerce-commons v0.1.31
+	github.com/Sokol111/ecommerce-commons v0.1.35
 	github.com/stretchr/testify v1.10.0
 )
 
 require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/go-viper/mapstructure/v2 v2.3.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/oapi-codegen/runtime v1.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
 )
 
 require (
-	github.com/Sokol111/ecommerce-category-query-service-api v1.0.3
+	github.com/Sokol111/ecommerce-category-query-service-api v1.0.4
 	github.com/bytedance/sonic v1.13.3 // indirect
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect

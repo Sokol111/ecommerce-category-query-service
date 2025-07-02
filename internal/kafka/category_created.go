@@ -7,23 +7,20 @@ import (
 	"github.com/Sokol111/ecommerce-commons/pkg/event"
 	"github.com/Sokol111/ecommerce-commons/pkg/event/payload"
 	"github.com/Sokol111/ecommerce-commons/pkg/kafka/consumer"
-	"go.uber.org/zap"
 )
 
 type categoryCreatedHandler struct {
-	service model.CategoryListService
-	log     *zap.Logger
+	categoryListService model.CategoryListService
 }
 
-func newCategoryCreatedHandler(service model.CategoryListService, log *zap.Logger) consumer.Handler[payload.CategoryCreated] {
+func newCategoryCreatedHandler(categoryListService model.CategoryListService) consumer.Handler[payload.CategoryCreated] {
 	return &categoryCreatedHandler{
-		service: service,
-		log:     log,
+		categoryListService: categoryListService,
 	}
 }
 
 func (h *categoryCreatedHandler) Process(ctx context.Context, e *event.Event[payload.CategoryCreated]) error {
-	return h.service.ProcessCategoryCreatedEvent(ctx, e)
+	return h.categoryListService.ProcessCategoryCreatedEvent(ctx, e)
 }
 
 func (h *categoryCreatedHandler) Validate(payload *payload.CategoryCreated) error {

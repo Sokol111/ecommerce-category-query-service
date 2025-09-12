@@ -20,11 +20,10 @@ type Store interface {
 
 type store struct {
 	wrapper *mongo.CollectionWrapper[collection]
-	logger  *zap.Logger
 }
 
-func newStore(wrapper *mongo.CollectionWrapper[collection], logger *zap.Logger) Store {
-	return &store{wrapper, logger.With(zap.String("component", "category-list-store"))}
+func newStore(wrapper *mongo.CollectionWrapper[collection]) Store {
+	return &store{wrapper}
 }
 
 func (s *store) Upsert(ctx context.Context, id string, name string, version int, enabled bool) error {
@@ -72,5 +71,5 @@ func (s *store) GetAllEnabled(ctx context.Context) (*model.CategoryListViewDTO, 
 }
 
 func (s *store) log(ctx context.Context) *zap.Logger {
-	return logger.CombineLogger(s.logger, ctx)
+	return logger.FromContext(ctx).With(zap.String("component", "category-list-store"))
 }

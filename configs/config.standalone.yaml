@@ -22,3 +22,7 @@ kafka:
         topic: "catalog.category.created.v1"
       - handler: "categoryUpdatedHandler"
         topic: "catalog.category.updated.v1"
+
+observability:
+  tracing-enabled: true
+  otel-collector-endpoint: ""

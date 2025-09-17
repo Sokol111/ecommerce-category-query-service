@@ -3,7 +3,7 @@ module github.com/Sokol111/ecommerce-category-query-service
 go 1.24.2
 
 require (
-	github.com/Sokol111/ecommerce-commons v0.1.44
+	github.com/Sokol111/ecommerce-commons v0.1.45
 	github.com/stretchr/testify v1.11.1
 )
 

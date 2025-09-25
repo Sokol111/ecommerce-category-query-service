@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/Sokol111/ecommerce-commons/pkg/mongo"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.uber.org/fx"
 )
 
@@ -21,10 +20,6 @@ func provideCollection(lc fx.Lifecycle, m mongo.Mongo) (*mongo.CollectionWrapper
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			wrapper.Coll = m.GetCollection("category_list")
-			err := m.CreateSimpleIndex(ctx, "category_list", bson.D{{Key: "enabled", Value: 1}})
-			if err != nil {
-				return err
-			}
 			return nil
 		},
 	})

@@ -1,0 +1,17 @@
+[
+    {
+        "createIndexes": "category_list",
+        "indexes": [
+            {
+                "name": "category_list_enabled_v1",
+                "key": {
+                    "enabled": 1
+                }
+            }
+        ],
+        "commitQuorum": "majority",
+        "writeConcern": {
+            "w": "majority"
+        }
+    }
+]

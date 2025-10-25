@@ -5,27 +5,34 @@ import (
 	"net/http"
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/api"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/model"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/application/query"
 )
 
 type categoryHandler struct {
-	categoryListService model.CategoryListService
+	getAllActiveCategoriesHandler query.GetAllActiveCategoriesQueryHandler
 }
 
-func newCategoryHandler(service model.CategoryListService) api.StrictServerInterface {
-	return &categoryHandler{service}
+func newCategoryHandler(
+	getAllActiveCategoriesHandler query.GetAllActiveCategoriesQueryHandler,
+) api.StrictServerInterface {
+	return &categoryHandler{
+		getAllActiveCategoriesHandler: getAllActiveCategoriesHandler,
+	}
 }
 
 func (h *categoryHandler) GetAllActiveCategories(c context.Context, _ api.GetAllActiveCategoriesRequestObject) (api.GetAllActiveCategoriesResponseObject, error) {
-	dto, err := h.categoryListService.GetActiveCategories(c)
+	q := query.GetAllActiveCategoriesQuery{}
+
+	categories, err := h.getAllActiveCategoriesHandler.Handle(c, q)
 	if err != nil {
 		return api.GetAllActiveCategories500JSONResponse{Code: 500, Message: http.StatusText(500)}, err
 	}
-	response := make(api.GetAllActiveCategories200JSONResponse, 0, len(dto.Categories))
-	for _, u := range dto.Categories {
+
+	response := make(api.GetAllActiveCategories200JSONResponse, 0, len(categories))
+	for _, cat := range categories {
 		response = append(response, api.CategoryResponse{
-			Id:   u.ID,
-			Name: u.Name,
+			Id:   cat.ID,
+			Name: cat.Name,
 		})
 	}
 	return response, nil

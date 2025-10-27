@@ -9,6 +9,9 @@ mongo:
   port: 27017
   replica-set: rs0
   database: "category-query"
+  migrations:
+    enabled: true
+    auto-migrate: true
 
 kafka:
   brokers: "kafka:29092"

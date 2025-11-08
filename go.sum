@@ -14,6 +14,10 @@ github.com/Microsoft/hcsshim v0.11.5 h1:haEcLNpj9Ka1gd3B3tAEs9CpE0c+1IhoL59w/exY
 github.com/Microsoft/hcsshim v0.11.5/go.mod h1:MV8xMfmECjl5HdO7U/3/hFVnkmSBjAjmA09d4bExKcU=
 github.com/Sokol111/ecommerce-category-query-service-api v1.0.4 h1:rLM9jOCKmU1H8ONaNm/kOWcPSoi3MP5BhpJExvoHfWc=
 github.com/Sokol111/ecommerce-category-query-service-api v1.0.4/go.mod h1:bQr7Am1B//nLYV9udgAoAOoRC8tX3B89sxxjTvXfJN4=
+github.com/Sokol111/ecommerce-category-service-api v1.0.12 h1:9nlsx/2X0IexGigBfEPsrkgDY1dbtXg4XBZbz+HEdmI=
+github.com/Sokol111/ecommerce-category-service-api v1.0.12/go.mod h1:fEPAl3l9qC7gyazueIqzLSBnJfWdA89ulc2+d7KHqG0=
+github.com/Sokol111/ecommerce-product-service-api v1.0.76 h1:1JEAdluVhX9xy9CatqqULAJYWQpJe+9IFpPOQqrI4ok=
+github.com/Sokol111/ecommerce-product-service-api v1.0.76/go.mod h1:NDtnafDA3xGQT5mpYRVp3qUOSY47VhuYuIRptiXyVHg=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d h1:licZJFw2RwpHMqeKTCYkitsPqHNxTmd4SNR5r94FGM8=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d/go.mod h1:asat636LX7Bqt5lYEZ27JNDcqxfjdBQuJ/MM4CN/Lzo=
 github.com/aws/aws-sdk-go-v2 v1.26.1 h1:5554eUqIYVWpU0YmeeYZ0wU64H2VLBs8TlhRB2L+EkA=
@@ -186,6 +190,8 @@ github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWm
 github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2 h1:8Tjv8EJ+pM1xP8mK6egEbD1OgnVTyacbefKhmbLhIhU=
 github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2/go.mod h1:pkJQ2tZHJ0aFOVEEot6oZmaVEZcRme73eIFmhiVuRWs=
+github.com/hamba/avro/v2 v2.24.0 h1:axTlaYDkcSY0dVekRSy8cdrsj5MG86WqosUQacKCids=
+github.com/hamba/avro/v2 v2.24.0/go.mod h1:7vDfy/2+kYCE8WUHoj2et59GTv0ap7ptktMXu0QHePI=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/errwrap v1.1.0 h1:OxrOeh75EUXMY8TBjag2fzXGZ40LB6IKw45YeGUDY2I=
 github.com/hashicorp/errwrap v1.1.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=

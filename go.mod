@@ -2,7 +2,11 @@ module github.com/Sokol111/ecommerce-category-query-service
 
 go 1.24.2
 
-require github.com/Sokol111/ecommerce-commons v0.1.46
+require (
+	github.com/Sokol111/ecommerce-category-service-api v1.0.12
+	github.com/Sokol111/ecommerce-commons v0.1.46
+	github.com/Sokol111/ecommerce-product-service-api v1.0.76
+)
 
 require (
 	github.com/bytedance/gopkg v0.1.3 // indirect
@@ -14,8 +18,10 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.19.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2 // indirect
+	github.com/hamba/avro/v2 v2.24.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/moby/sys/userns v0.1.0 // indirect
 	github.com/oapi-codegen/runtime v1.1.1 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect

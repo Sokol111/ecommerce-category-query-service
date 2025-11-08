@@ -16,8 +16,6 @@ github.com/Sokol111/ecommerce-category-query-service-api v1.0.4 h1:rLM9jOCKmU1H8
 github.com/Sokol111/ecommerce-category-query-service-api v1.0.4/go.mod h1:bQr7Am1B//nLYV9udgAoAOoRC8tX3B89sxxjTvXfJN4=
 github.com/Sokol111/ecommerce-category-service-api v1.0.12 h1:9nlsx/2X0IexGigBfEPsrkgDY1dbtXg4XBZbz+HEdmI=
 github.com/Sokol111/ecommerce-category-service-api v1.0.12/go.mod h1:fEPAl3l9qC7gyazueIqzLSBnJfWdA89ulc2+d7KHqG0=
-github.com/Sokol111/ecommerce-product-service-api v1.0.76 h1:1JEAdluVhX9xy9CatqqULAJYWQpJe+9IFpPOQqrI4ok=
-github.com/Sokol111/ecommerce-product-service-api v1.0.76/go.mod h1:NDtnafDA3xGQT5mpYRVp3qUOSY47VhuYuIRptiXyVHg=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d h1:licZJFw2RwpHMqeKTCYkitsPqHNxTmd4SNR5r94FGM8=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d/go.mod h1:asat636LX7Bqt5lYEZ27JNDcqxfjdBQuJ/MM4CN/Lzo=
 github.com/actgardner/gogen-avro/v10 v10.2.1 h1:z3pOGblRjAJCYpkIJ8CmbMJdksi4rAhaygw0dyXZ930=

@@ -5,7 +5,6 @@ go 1.24.2
 require (
 	github.com/Sokol111/ecommerce-category-service-api v1.0.12
 	github.com/Sokol111/ecommerce-commons v0.1.46
-	github.com/Sokol111/ecommerce-product-service-api v1.0.76
 )
 
 require (

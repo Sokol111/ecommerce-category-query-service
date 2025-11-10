@@ -2,7 +2,6 @@ package http
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/api"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application/query"
@@ -25,7 +24,7 @@ func (h *categoryHandler) GetAllActiveCategories(c context.Context, _ api.GetAll
 
 	categories, err := h.getAllActiveCategoriesHandler.Handle(c, q)
 	if err != nil {
-		return api.GetAllActiveCategories500JSONResponse{Code: 500, Message: http.StatusText(500)}, err
+		return nil, err
 	}
 
 	response := make(api.GetAllActiveCategories200JSONResponse, 0, len(categories))

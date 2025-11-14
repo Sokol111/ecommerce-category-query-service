@@ -17,14 +17,16 @@ mongo:
 
 kafka:
   brokers: "localhost:9092"
+  schema-registry:
+    url: "http://localhost:8084"
+    auto-register-schemas: true
+    cache-capacity: 1000
   consumers-config:
     group-id: "ecommerce-category-query-service"
     auto-offset-reset: "earliest"
     consumers:
-      - handler: "categoryCreatedHandler"
-        topic: "catalog.category.created.v1"
-      - handler: "categoryUpdatedHandler"
-        topic: "catalog.category.updated.v1"
+      - name: "category-events"
+        topic: "catalog.category.events"
 
 observability:
   tracing-enabled: true

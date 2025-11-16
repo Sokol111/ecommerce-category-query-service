@@ -3,13 +3,12 @@ module github.com/Sokol111/ecommerce-category-query-service
 go 1.24.2
 
 require (
-	github.com/Sokol111/ecommerce-category-service-api v1.0.12
+	github.com/Sokol111/ecommerce-category-service-api v1.0.15
 	github.com/Sokol111/ecommerce-commons v0.1.46
 	github.com/getkin/kin-openapi v0.133.0
 )
 
 require (
-	github.com/actgardner/gogen-avro/v10 v10.2.1 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
@@ -22,13 +21,11 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2 // indirect
-	github.com/hamba/avro/v2 v2.24.0 // indirect
+	github.com/hamba/avro/v2 v2.30.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/heetch/avro v0.4.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/moby/sys/userns v0.1.0 // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
 	github.com/oapi-codegen/gin-middleware v1.0.2 // indirect

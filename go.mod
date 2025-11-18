@@ -3,7 +3,7 @@ module github.com/Sokol111/ecommerce-category-query-service
 go 1.24.2
 
 require (
-	github.com/Sokol111/ecommerce-category-service-api v1.0.15
+	github.com/Sokol111/ecommerce-category-service-api v1.0.20
 	github.com/Sokol111/ecommerce-commons v0.1.46
 	github.com/getkin/kin-openapi v0.133.0
 )

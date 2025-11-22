@@ -52,7 +52,7 @@ func (r *categoryViewRepository) Upsert(ctx context.Context, category *categoryv
 	}
 
 	if result.MatchedCount == 0 && result.UpsertedCount == 0 {
-		logger.FromContext(ctx).Debug("version conflict during upsert", zap.String("id", category.ID))
+		logger.Get(ctx).Debug("version conflict during upsert", zap.String("id", category.ID))
 	}
 
 	return nil

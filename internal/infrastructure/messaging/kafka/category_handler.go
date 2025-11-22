@@ -86,5 +86,5 @@ func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.C
 }
 
 func (h *categoryHandler) log(ctx context.Context) *zap.Logger {
-	return logger.FromContext(ctx).With(zap.String("component", "category-handler"))
+	return logger.Get(ctx).With(zap.String("component", "category-handler"))
 }

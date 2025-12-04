@@ -2,13 +2,23 @@ package kafka
 
 import (
 	"github.com/Sokol111/ecommerce-category-service-api/events"
+	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/avro/mapping"
 	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
 	"go.uber.org/fx"
 )
 
 func Module() fx.Option {
 	return fx.Options(
-		consumer.RegisterTypeMapping(events.DefaultTypeMapping),
 		consumer.RegisterHandlerAndConsumer("category-events", newCategoryHandler),
+		fx.Invoke(registerSchemas),
 	)
+}
+
+func registerSchemas(tm *mapping.TypeMapping) error {
+	for _, reg := range events.TypeRegistrations {
+		if err := tm.Register(reg.GoType, reg.SchemaJSON, reg.SchemaName, reg.Topic); err != nil {
+			return err
+		}
+	}
+	return nil
 }

@@ -1,6 +1,6 @@
 module github.com/Sokol111/ecommerce-category-query-service
 
-go 1.24.2
+go 1.25.5
 
 require (
 	github.com/Sokol111/ecommerce-category-service-api v1.0.21

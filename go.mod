@@ -3,7 +3,7 @@ module github.com/Sokol111/ecommerce-category-query-service
 go 1.25.5
 
 require (
-	github.com/Sokol111/ecommerce-category-service-api v1.0.23
+	github.com/Sokol111/ecommerce-category-service-api v1.0.24
 	github.com/Sokol111/ecommerce-commons v0.1.46
 	github.com/getkin/kin-openapi v0.133.0
 )
@@ -68,7 +68,7 @@ require (
 )
 
 require (
-	github.com/Sokol111/ecommerce-category-query-service-api v1.0.7
+	github.com/Sokol111/ecommerce-category-query-service-api v1.0.9
 	github.com/bytedance/sonic v1.14.2 // indirect
 	github.com/bytedance/sonic/loader v0.4.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect

@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
-	"github.com/Sokol111/ecommerce-category-service-api/events"
+	"github.com/Sokol111/ecommerce-category-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
 	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
 	"go.uber.org/zap"

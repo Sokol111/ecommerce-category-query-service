@@ -2,74 +2,46 @@ package mongo
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
-	"github.com/Sokol111/ecommerce-commons/pkg/persistence"
 	commonsmongo "github.com/Sokol111/ecommerce-commons/pkg/persistence/mongo"
 	"go.mongodb.org/mongo-driver/bson"
-	mongodriver "go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
 )
 
 type categoryViewRepository struct {
+	*commonsmongo.GenericRepository[categoryview.CategoryView, categoryViewEntity]
 	collection commonsmongo.Collection
 	mapper     *categoryViewMapper
 }
 
-func newCategoryViewRepository(mongo commonsmongo.Mongo, mapper *categoryViewMapper) categoryview.Repository {
-	return &categoryViewRepository{
-		collection: mongo.GetCollection("category_list"),
-		mapper:     mapper,
+func newCategoryViewRepository(mongo commonsmongo.Mongo, mapper *categoryViewMapper) (categoryview.Repository, error) {
+	collection := mongo.GetCollection("category_list")
+	genericRepo, err := commonsmongo.NewGenericRepository(collection, mapper)
+	if err != nil {
+		return nil, err
 	}
+
+	return &categoryViewRepository{
+		GenericRepository: genericRepo,
+		collection:        collection,
+		mapper:            mapper,
+	}, nil
 }
 
 func (r *categoryViewRepository) Upsert(ctx context.Context, category *categoryview.CategoryView) error {
-	entity := r.mapper.ToEntity(category)
-
-	filter := bson.M{
-		"_id":     entity.ID,
-		"version": bson.M{"$lt": entity.Version},
-	}
-
-	update := bson.M{
-		"$set": bson.M{
-			"name":       entity.Name,
-			"enabled":    entity.Enabled,
-			"version":    entity.Version,
-			"createdAt":  entity.CreatedAt,
-			"modifiedAt": entity.ModifiedAt,
-		},
-	}
-
-	opts := options.Update().SetUpsert(true)
-	result, err := r.collection.UpdateOne(ctx, filter, update, opts)
+	updated, err := r.UpsertIfNewer(ctx, category)
 	if err != nil {
-		return fmt.Errorf("failed to upsert category view: %w", err)
+		return err
 	}
 
-	if result.MatchedCount == 0 && result.UpsertedCount == 0 {
+	if !updated {
 		logger.Get(ctx).Debug("version conflict during upsert", zap.String("id", category.ID))
 	}
 
 	return nil
-}
-
-func (r *categoryViewRepository) FindByID(ctx context.Context, id string) (*categoryview.CategoryView, error) {
-	var entity categoryViewEntity
-
-	err := r.collection.FindOne(ctx, bson.D{{Key: "_id", Value: id}}).Decode(&entity)
-	if err != nil {
-		if errors.Is(err, mongodriver.ErrNoDocuments) {
-			return nil, persistence.ErrEntityNotFound
-		}
-		return nil, fmt.Errorf("failed to find category view by id: %w", err)
-	}
-
-	return r.mapper.ToDomain(&entity), nil
 }
 
 func (r *categoryViewRepository) FindAllEnabled(ctx context.Context) ([]*categoryview.CategoryView, error) {

@@ -9,6 +9,14 @@ import (
 	"github.com/Sokol111/ecommerce-commons/pkg/persistence"
 )
 
+type GetCategoryByIDQuery struct {
+	ID string
+}
+
+type GetCategoryByIDQueryHandler interface {
+	Handle(ctx context.Context, query GetCategoryByIDQuery) (*categoryview.CategoryView, error)
+}
+
 type getCategoryByIDHandler struct {
 	repo categoryview.Repository
 }

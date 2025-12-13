@@ -7,6 +7,12 @@ import (
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 )
 
+type GetAllActiveCategoriesQuery struct{}
+
+type GetAllActiveCategoriesQueryHandler interface {
+	Handle(ctx context.Context, query GetAllActiveCategoriesQuery) ([]*categoryview.CategoryView, error)
+}
+
 type getAllActiveCategoriesHandler struct {
 	repo categoryview.Repository
 }

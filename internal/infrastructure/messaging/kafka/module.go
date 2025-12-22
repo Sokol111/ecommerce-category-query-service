@@ -15,10 +15,5 @@ func Module() fx.Option {
 }
 
 func registerSchemas(tm *mapping.TypeMapping) error {
-	for _, reg := range events.TypeRegistrations {
-		if err := tm.Register(reg.GoType, reg.SchemaJSON, reg.SchemaName, reg.Topic); err != nil {
-			return err
-		}
-	}
-	return nil
+	return tm.RegisterBindings(events.SchemaBindings)
 }

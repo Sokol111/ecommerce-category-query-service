@@ -8,7 +8,6 @@ import (
 	"github.com/Sokol111/ecommerce-category-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
 	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
-	commonsevents "github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/events"
 	"go.uber.org/zap"
 )
 
@@ -23,20 +22,12 @@ func newCategoryHandler(repo categoryview.Repository) *categoryHandler {
 }
 
 func (h *categoryHandler) Process(ctx context.Context, event any) error {
-	e, ok := event.(commonsevents.Event)
-	if !ok {
-		return fmt.Errorf("event does not implement Event interface: %T: %w", event, consumer.ErrSkipMessage)
-	}
-
-	// Now switch on concrete types - exhaustive linter will warn if any Event type is missing
-	switch evt := e.(type) {
+	switch evt := event.(type) {
 	case *events.CategoryCreatedEvent:
 		return h.handleCategoryCreated(ctx, evt)
 	case *events.CategoryUpdatedEvent:
 		return h.handleCategoryUpdated(ctx, evt)
 	default:
-		// If exhaustive linter is enabled and all Event types are handled above,
-		// this case should theoretically never be reached
 		return fmt.Errorf("unhandled event type: %T: %w", event, consumer.ErrSkipMessage)
 	}
 }

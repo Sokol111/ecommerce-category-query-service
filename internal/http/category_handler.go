@@ -6,6 +6,7 @@ import (
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/gen/httpapi"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application/query"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/persistence"
 )
 
@@ -35,8 +36,9 @@ func (h *categoryHandler) GetAllActiveCategories(c context.Context, _ httpapi.Ge
 	response := make(httpapi.GetAllActiveCategories200JSONResponse, 0, len(categories))
 	for _, cat := range categories {
 		response = append(response, httpapi.CategoryResponse{
-			Id:   cat.ID,
-			Name: cat.Name,
+			Id:         cat.ID,
+			Name:       cat.Name,
+			Attributes: mapAttributes(cat.Attributes),
 		})
 	}
 	return response, nil
@@ -60,7 +62,24 @@ func (h *categoryHandler) GetCategoryById(c context.Context, request httpapi.Get
 	}
 
 	return httpapi.GetCategoryById200JSONResponse{
-		Id:   category.ID,
-		Name: category.Name,
+		Id:         category.ID,
+		Name:       category.Name,
+		Attributes: mapAttributes(category.Attributes),
 	}, nil
+}
+
+func mapAttributes(attrs []categoryview.CategoryAttribute) []httpapi.CategoryAttribute {
+	result := make([]httpapi.CategoryAttribute, 0, len(attrs))
+	for _, attr := range attrs {
+		result = append(result, httpapi.CategoryAttribute{
+			AttributeId: attr.AttributeID,
+			Role:        httpapi.AttributeRole(attr.Role),
+			Required:    attr.Required,
+			SortOrder:   attr.SortOrder,
+			Filterable:  attr.Filterable,
+			Searchable:  attr.Searchable,
+			Enabled:     attr.Enabled,
+		})
+	}
+	return result
 }

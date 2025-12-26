@@ -33,11 +33,14 @@ func (h *categoryHandler) Process(ctx context.Context, event any) error {
 }
 
 func (h *categoryHandler) handleCategoryCreated(ctx context.Context, e *events.CategoryCreatedEvent) error {
+	attributes := mapEventAttributes(e.Payload.Attributes)
+
 	view := categoryview.NewCategoryView(
 		e.Payload.CategoryID,
 		e.Payload.Version,
 		e.Payload.Name,
 		e.Payload.Enabled,
+		attributes,
 		e.Payload.CreatedAt,
 		e.Payload.ModifiedAt,
 	)
@@ -55,11 +58,14 @@ func (h *categoryHandler) handleCategoryCreated(ctx context.Context, e *events.C
 }
 
 func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.CategoryUpdatedEvent) error {
+	attributes := mapEventAttributes(e.Payload.Attributes)
+
 	view := categoryview.NewCategoryView(
 		e.Payload.CategoryID,
 		e.Payload.Version,
 		e.Payload.Name,
 		e.Payload.Enabled,
+		attributes,
 		e.Payload.CreatedAt,
 		e.Payload.ModifiedAt,
 	)
@@ -74,6 +80,22 @@ func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.C
 		zap.Int("version", e.Payload.Version))
 
 	return nil
+}
+
+func mapEventAttributes(eventAttrs []events.CategoryAttribute) []categoryview.CategoryAttribute {
+	attributes := make([]categoryview.CategoryAttribute, 0, len(eventAttrs))
+	for _, attr := range eventAttrs {
+		attributes = append(attributes, categoryview.CategoryAttribute{
+			AttributeID: attr.AttributeID,
+			Role:        categoryview.AttributeRole(attr.Role),
+			Required:    attr.Required,
+			SortOrder:   attr.SortOrder,
+			Filterable:  attr.Filterable,
+			Searchable:  attr.Searchable,
+			Enabled:     attr.Enabled,
+		})
+	}
+	return attributes
 }
 
 func (h *categoryHandler) log(ctx context.Context) *zap.Logger {

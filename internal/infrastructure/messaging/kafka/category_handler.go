@@ -85,9 +85,24 @@ func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.C
 func mapEventAttributes(eventAttrs []events.CategoryAttribute) []categoryview.CategoryAttribute {
 	attributes := make([]categoryview.CategoryAttribute, 0, len(eventAttrs))
 	for _, attr := range eventAttrs {
+		options := make([]categoryview.AttributeOption, 0, len(attr.Options))
+		for _, opt := range attr.Options {
+			options = append(options, categoryview.AttributeOption{
+				Value:     opt.Value,
+				Slug:      opt.Slug,
+				ColorCode: opt.ColorCode,
+				SortOrder: opt.SortOrder,
+				Enabled:   opt.Enabled,
+			})
+		}
 		attributes = append(attributes, categoryview.CategoryAttribute{
 			AttributeID: attr.AttributeID,
-			Role:        categoryview.AttributeRole(attr.Role),
+			Name:        attr.Name,
+			Slug:        attr.Slug,
+			Type:        attr.Type,
+			Unit:        attr.Unit,
+			Options:     options,
+			Role:        attr.Role,
 			Required:    attr.Required,
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,

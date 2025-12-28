@@ -2,18 +2,24 @@ package categoryview
 
 import "time"
 
-// AttributeRole defines how an attribute is used in a category
-type AttributeRole string
-
-const (
-	AttributeRoleVariant       AttributeRole = "variant"
-	AttributeRoleSpecification AttributeRole = "specification"
-)
+// AttributeOption represents an option for single/multiple type attributes
+type AttributeOption struct {
+	Value     string
+	Slug      string
+	ColorCode *string
+	SortOrder int
+	Enabled   bool
+}
 
 // CategoryAttribute represents an attribute assigned to a category
 type CategoryAttribute struct {
 	AttributeID string
-	Role        AttributeRole
+	Name        string
+	Slug        string
+	Type        string
+	Unit        *string
+	Options     []AttributeOption
+	Role        string
 	Required    bool
 	SortOrder   int
 	Filterable  bool

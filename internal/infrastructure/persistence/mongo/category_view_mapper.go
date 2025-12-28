@@ -14,9 +14,24 @@ func newCategoryViewMapper() *categoryViewMapper {
 func (m *categoryViewMapper) ToEntity(domain *categoryview.CategoryView) *categoryViewEntity {
 	attributes := make([]categoryAttributeEntity, 0, len(domain.Attributes))
 	for _, attr := range domain.Attributes {
+		options := make([]attributeOptionEntity, 0, len(attr.Options))
+		for _, opt := range attr.Options {
+			options = append(options, attributeOptionEntity{
+				Value:     opt.Value,
+				Slug:      opt.Slug,
+				ColorCode: opt.ColorCode,
+				SortOrder: opt.SortOrder,
+				Enabled:   opt.Enabled,
+			})
+		}
 		attributes = append(attributes, categoryAttributeEntity{
 			AttributeID: attr.AttributeID,
-			Role:        string(attr.Role),
+			Name:        attr.Name,
+			Slug:        attr.Slug,
+			Type:        attr.Type,
+			Unit:        attr.Unit,
+			Options:     options,
+			Role:        attr.Role,
 			Required:    attr.Required,
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
@@ -39,9 +54,24 @@ func (m *categoryViewMapper) ToEntity(domain *categoryview.CategoryView) *catego
 func (m *categoryViewMapper) ToDomain(entity *categoryViewEntity) *categoryview.CategoryView {
 	attributes := make([]categoryview.CategoryAttribute, 0, len(entity.Attributes))
 	for _, attr := range entity.Attributes {
+		options := make([]categoryview.AttributeOption, 0, len(attr.Options))
+		for _, opt := range attr.Options {
+			options = append(options, categoryview.AttributeOption{
+				Value:     opt.Value,
+				Slug:      opt.Slug,
+				ColorCode: opt.ColorCode,
+				SortOrder: opt.SortOrder,
+				Enabled:   opt.Enabled,
+			})
+		}
 		attributes = append(attributes, categoryview.CategoryAttribute{
 			AttributeID: attr.AttributeID,
-			Role:        categoryview.AttributeRole(attr.Role),
+			Name:        attr.Name,
+			Slug:        attr.Slug,
+			Type:        attr.Type,
+			Unit:        attr.Unit,
+			Options:     options,
+			Role:        attr.Role,
 			Required:    attr.Required,
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,

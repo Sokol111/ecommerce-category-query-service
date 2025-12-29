@@ -1,9 +1,9 @@
 [
     {
-        "createIndexes": "category_list",
+        "createIndexes": "category_view",
         "indexes": [
             {
-                "name": "category_list_enabled_v1",
+                "name": "category_view_enabled_v1",
                 "key": {
                     "enabled": 1
                 }

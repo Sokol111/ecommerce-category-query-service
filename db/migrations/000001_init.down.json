@@ -1,0 +1,9 @@
+[
+    {
+        "dropIndexes": "category_view",
+        "index": "category_view_enabled_v1",
+        "writeConcern": {
+            "w": "majority"
+        }
+    }
+]

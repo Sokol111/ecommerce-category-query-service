@@ -1,9 +1,0 @@
-[
-    {
-        "dropIndexes": "category_list",
-        "index": "category_list_enabled_v1",
-        "writeConcern": {
-            "w": "majority"
-        }
-    }
-]

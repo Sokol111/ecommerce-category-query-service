@@ -17,7 +17,7 @@ func (m *categoryViewMapper) ToEntity(domain *categoryview.CategoryView) *catego
 		options := make([]attributeOptionEntity, 0, len(attr.Options))
 		for _, opt := range attr.Options {
 			options = append(options, attributeOptionEntity{
-				Value:     opt.Value,
+				Name:      opt.Name,
 				Slug:      opt.Slug,
 				ColorCode: opt.ColorCode,
 				SortOrder: opt.SortOrder,
@@ -57,7 +57,7 @@ func (m *categoryViewMapper) ToDomain(entity *categoryViewEntity) *categoryview.
 		options := make([]categoryview.AttributeOption, 0, len(attr.Options))
 		for _, opt := range attr.Options {
 			options = append(options, categoryview.AttributeOption{
-				Value:     opt.Value,
+				Name:      opt.Name,
 				Slug:      opt.Slug,
 				ColorCode: opt.ColorCode,
 				SortOrder: opt.SortOrder,

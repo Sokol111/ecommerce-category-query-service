@@ -88,7 +88,7 @@ func mapEventAttributes(eventAttrs []events.CategoryAttribute) []categoryview.Ca
 		options := make([]categoryview.AttributeOption, 0, len(attr.Options))
 		for _, opt := range attr.Options {
 			options = append(options, categoryview.AttributeOption{
-				Value:     opt.Value,
+				Name:      opt.Name,
 				Slug:      opt.Slug,
 				ColorCode: opt.ColorCode,
 				SortOrder: opt.SortOrder,

@@ -6,7 +6,7 @@ import (
 
 // attributeOptionEntity represents an attribute option in MongoDB
 type attributeOptionEntity struct {
-	Value     string  `bson:"value"`
+	Name      string  `bson:"name"`
 	Slug      string  `bson:"slug"`
 	ColorCode *string `bson:"colorCode,omitempty"`
 	SortOrder int     `bson:"sortOrder"`

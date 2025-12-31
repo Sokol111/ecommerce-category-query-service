@@ -32,7 +32,7 @@ var aboutBlankURL, _ = url.Parse("about:blank")
 
 func mapOption(opt categoryview.AttributeOption, _ int) httpapi.AttributeOption {
 	return httpapi.AttributeOption{
-		Value:     opt.Value,
+		Name:      opt.Name,
 		Slug:      opt.Slug,
 		ColorCode: httpapi.NewOptString(lo.FromPtr(opt.ColorCode)),
 		SortOrder: opt.SortOrder,

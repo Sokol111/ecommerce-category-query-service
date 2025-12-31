@@ -4,7 +4,7 @@ import "time"
 
 // AttributeOption represents an option for single/multiple type attributes
 type AttributeOption struct {
-	Value     string
+	Name      string
 	Slug      string
 	ColorCode *string
 	SortOrder int

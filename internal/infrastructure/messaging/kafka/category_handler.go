@@ -133,7 +133,6 @@ func (h *categoryHandler) enrichAndMapAttributes(ctx context.Context, eventAttrs
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,
-			Enabled:     attr.Enabled,
 		})
 	}
 

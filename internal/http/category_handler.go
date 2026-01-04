@@ -53,7 +53,6 @@ func mapAttribute(attr categoryview.CategoryAttribute, _ int) httpapi.CategoryAt
 		SortOrder:   attr.SortOrder,
 		Filterable:  attr.Filterable,
 		Searchable:  attr.Searchable,
-		Enabled:     attr.Enabled,
 	}
 }
 

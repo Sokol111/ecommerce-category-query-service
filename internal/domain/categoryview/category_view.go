@@ -24,7 +24,6 @@ type CategoryAttribute struct {
 	SortOrder   int
 	Filterable  bool
 	Searchable  bool
-	Enabled     bool
 }
 
 // CategoryView - read model for category queries (CQRS query side)

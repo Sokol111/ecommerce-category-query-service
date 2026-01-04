@@ -26,7 +26,6 @@ type categoryAttributeEntity struct {
 	SortOrder   int                     `bson:"sortOrder"`
 	Filterable  bool                    `bson:"filterable"`
 	Searchable  bool                    `bson:"searchable"`
-	Enabled     bool                    `bson:"enabled"`
 }
 
 // categoryViewEntity represents the MongoDB document structure for category views

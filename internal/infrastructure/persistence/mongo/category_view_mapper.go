@@ -36,7 +36,6 @@ func (m *categoryViewMapper) ToEntity(domain *categoryview.CategoryView) *catego
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,
-			Enabled:     attr.Enabled,
 		})
 	}
 
@@ -76,7 +75,6 @@ func (m *categoryViewMapper) ToDomain(entity *categoryViewEntity) *categoryview.
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,
-			Enabled:     attr.Enabled,
 		})
 	}
 

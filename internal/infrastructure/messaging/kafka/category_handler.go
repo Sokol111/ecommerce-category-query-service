@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 
+	attributeapi "github.com/Sokol111/ecommerce-attribute-service-api/gen/httpapi"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/client"
 	"github.com/Sokol111/ecommerce-category-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
 	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
@@ -12,12 +14,14 @@ import (
 )
 
 type categoryHandler struct {
-	repo categoryview.Repository
+	repo       categoryview.Repository
+	attrClient client.AttributeClient
 }
 
-func newCategoryHandler(repo categoryview.Repository) *categoryHandler {
+func newCategoryHandler(repo categoryview.Repository, attrClient client.AttributeClient) *categoryHandler {
 	return &categoryHandler{
-		repo: repo,
+		repo:       repo,
+		attrClient: attrClient,
 	}
 }
 
@@ -33,7 +37,10 @@ func (h *categoryHandler) Process(ctx context.Context, event any) error {
 }
 
 func (h *categoryHandler) handleCategoryCreated(ctx context.Context, e *events.CategoryCreatedEvent) error {
-	attributes := mapEventAttributes(e.Payload.Attributes)
+	attributes, err := h.enrichAndMapAttributes(ctx, e.Payload.Attributes)
+	if err != nil {
+		return fmt.Errorf("failed to enrich attributes: %w", err)
+	}
 
 	view := categoryview.NewCategoryView(
 		e.Payload.CategoryID,
@@ -58,7 +65,10 @@ func (h *categoryHandler) handleCategoryCreated(ctx context.Context, e *events.C
 }
 
 func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.CategoryUpdatedEvent) error {
-	attributes := mapEventAttributes(e.Payload.Attributes)
+	attributes, err := h.enrichAndMapAttributes(ctx, e.Payload.Attributes)
+	if err != nil {
+		return fmt.Errorf("failed to enrich attributes: %w", err)
+	}
 
 	view := categoryview.NewCategoryView(
 		e.Payload.CategoryID,
@@ -82,27 +92,43 @@ func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.C
 	return nil
 }
 
-func mapEventAttributes(eventAttrs []events.CategoryAttribute) []categoryview.CategoryAttribute {
+// enrichAndMapAttributes fetches attribute data from attribute-service and builds domain attributes
+func (h *categoryHandler) enrichAndMapAttributes(ctx context.Context, eventAttrs []events.CategoryAttribute) ([]categoryview.CategoryAttribute, error) {
+	if len(eventAttrs) == 0 {
+		return []categoryview.CategoryAttribute{}, nil
+	}
+
+	// Collect attribute IDs
+	ids := make([]string, len(eventAttrs))
+	for i, attr := range eventAttrs {
+		ids[i] = attr.AttributeID
+	}
+
+	// Fetch attribute data from attribute-service
+	attrDataMap, err := h.attrClient.GetAttributesByIDs(ctx, ids)
+	if err != nil {
+		return nil, err
+	}
+
 	attributes := make([]categoryview.CategoryAttribute, 0, len(eventAttrs))
 	for _, attr := range eventAttrs {
-		options := make([]categoryview.AttributeOption, 0, len(attr.Options))
-		for _, opt := range attr.Options {
-			options = append(options, categoryview.AttributeOption{
-				Name:      opt.Name,
-				Slug:      opt.Slug,
-				ColorCode: opt.ColorCode,
-				SortOrder: opt.SortOrder,
-				Enabled:   opt.Enabled,
-			})
+		attrData := attrDataMap[attr.AttributeID]
+
+		var unit *string
+		if attrData.Unit.IsSet() {
+			unit = &attrData.Unit.Value
 		}
+
+		options := mapAttributeOptions(attrData.Options)
+
 		attributes = append(attributes, categoryview.CategoryAttribute{
 			AttributeID: attr.AttributeID,
-			Name:        attr.Name,
-			Slug:        attr.Slug,
-			Type:        attr.Type,
-			Unit:        attr.Unit,
+			Name:        attrData.Name,
+			Slug:        attrData.Slug,
+			Type:        string(attrData.Type),
+			Unit:        unit,
 			Options:     options,
-			Role:        attr.Role,
+			Role:        string(attr.Role),
 			Required:    attr.Required,
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
@@ -110,7 +136,30 @@ func mapEventAttributes(eventAttrs []events.CategoryAttribute) []categoryview.Ca
 			Enabled:     attr.Enabled,
 		})
 	}
-	return attributes
+
+	return attributes, nil
+}
+
+func mapAttributeOptions(options []attributeapi.AttributeOption) []categoryview.AttributeOption {
+	if options == nil {
+		return []categoryview.AttributeOption{}
+	}
+	result := make([]categoryview.AttributeOption, 0, len(options))
+	for _, opt := range options {
+		var colorCode *string
+		if opt.ColorCode.IsSet() {
+			colorCode = &opt.ColorCode.Value
+		}
+
+		result = append(result, categoryview.AttributeOption{
+			Name:      opt.Name,
+			Slug:      opt.Slug,
+			ColorCode: colorCode,
+			SortOrder: opt.SortOrder,
+			Enabled:   opt.Enabled,
+		})
+	}
+	return result
 }
 
 func (h *categoryHandler) log(ctx context.Context) *zap.Logger {

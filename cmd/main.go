@@ -6,6 +6,7 @@ import (
 	"github.com/Sokol111/ecommerce-category-query-service-api/gen/httpapi"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/http"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/client"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/messaging/kafka"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/persistence/mongo"
 	"github.com/Sokol111/ecommerce-commons/pkg/modules"
@@ -24,6 +25,7 @@ var AppModules = fx.Options(
 
 	// Domain & Application
 	mongo.Module(),
+	client.AttributeClientModule(),
 	application.Module(),
 
 	// Messaging

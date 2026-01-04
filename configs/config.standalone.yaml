@@ -28,6 +28,10 @@ kafka:
       - name: "category-events"
         topic: "catalog.category.events"
 
+clients:
+  attribute-service:
+    base-url: "http://localhost:8082"
+
 observability:
   otel-collector-endpoint: ""
   tracing:

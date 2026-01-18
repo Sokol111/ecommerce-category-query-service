@@ -4,7 +4,7 @@ go 1.25.5
 
 require (
 	github.com/Sokol111/ecommerce-attribute-service-api v1.0.0
-	github.com/Sokol111/ecommerce-category-service-api v1.0.30
+	github.com/Sokol111/ecommerce-catalog-service-api v1.0.1
 	github.com/Sokol111/ecommerce-commons v0.2.4
 	github.com/ogen-go/ogen v1.18.0
 	github.com/samber/lo v1.52.0

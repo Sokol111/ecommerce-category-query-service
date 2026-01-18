@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	attributeapi "github.com/Sokol111/ecommerce-attribute-service-api/gen/httpapi"
+	"github.com/Sokol111/ecommerce-catalog-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/client"
-	"github.com/Sokol111/ecommerce-category-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
 	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
 	"go.uber.org/zap"

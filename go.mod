@@ -4,7 +4,7 @@ go 1.25.5
 
 require (
 	github.com/Sokol111/ecommerce-catalog-service-api v1.0.1
-	github.com/Sokol111/ecommerce-commons v0.2.4
+	github.com/Sokol111/ecommerce-commons v0.2.6
 	github.com/google/uuid v1.6.0
 	github.com/ogen-go/ogen v1.18.0
 	github.com/samber/lo v1.52.0
@@ -13,6 +13,8 @@ require (
 )
 
 require (
+	aidanwoods.dev/go-paseto v1.6.0 // indirect
+	aidanwoods.dev/go-result v0.3.1 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
@@ -56,7 +58,6 @@ require (
 	github.com/quic-go/quic-go v0.58.0 // indirect
 	github.com/segmentio/asm v1.2.1 // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
-	github.com/sony/gobreaker v1.0.0 // indirect
 	github.com/woodsbury/decimal128 v1.4.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo v0.64.0 // indirect

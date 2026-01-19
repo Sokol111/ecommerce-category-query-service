@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	attributeapi "github.com/Sokol111/ecommerce-attribute-service-api/gen/httpapi"
 	"github.com/Sokol111/ecommerce-catalog-service-api/gen/events"
+	catalogapi "github.com/Sokol111/ecommerce-catalog-service-api/gen/httpapi"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/client"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
@@ -92,7 +92,7 @@ func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.C
 	return nil
 }
 
-// enrichAndMapAttributes fetches attribute data from attribute-service and builds domain attributes
+// enrichAndMapAttributes fetches attribute data from catalog-service and builds domain attributes
 func (h *categoryHandler) enrichAndMapAttributes(ctx context.Context, eventAttrs []events.CategoryAttribute) ([]categoryview.CategoryAttribute, error) {
 	if len(eventAttrs) == 0 {
 		return []categoryview.CategoryAttribute{}, nil
@@ -104,7 +104,7 @@ func (h *categoryHandler) enrichAndMapAttributes(ctx context.Context, eventAttrs
 		ids[i] = attr.AttributeID
 	}
 
-	// Fetch attribute data from attribute-service
+	// Fetch attribute data from catalog-service
 	attrDataMap, err := h.attrClient.GetAttributesByIDs(ctx, ids)
 	if err != nil {
 		return nil, err
@@ -139,7 +139,7 @@ func (h *categoryHandler) enrichAndMapAttributes(ctx context.Context, eventAttrs
 	return attributes, nil
 }
 
-func mapAttributeOptions(options []attributeapi.AttributeOption) []categoryview.AttributeOption {
+func mapAttributeOptions(options []catalogapi.AttributeOption) []categoryview.AttributeOption {
 	if options == nil {
 		return []categoryview.AttributeOption{}
 	}

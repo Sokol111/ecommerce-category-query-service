@@ -27,8 +27,8 @@ kafka:
         topic: "catalog.category.events"
 
 clients:
-  attribute-service:
-    base-url: "http://ecommerce-attribute-service:8080"
+  catalog-service:
+    base-url: "http://ecommerce-catalog-service:8080"
 
 security:
   token:

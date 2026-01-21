@@ -10,7 +10,6 @@ type attributeOptionEntity struct {
 	Slug      string  `bson:"slug"`
 	ColorCode *string `bson:"colorCode,omitempty"`
 	SortOrder int     `bson:"sortOrder"`
-	Enabled   bool    `bson:"enabled"`
 }
 
 // categoryAttributeEntity represents a category attribute in MongoDB

@@ -36,7 +36,6 @@ func mapOption(opt categoryview.AttributeOption, _ int) httpapi.AttributeOption 
 		Slug:      opt.Slug,
 		ColorCode: httpapi.NewOptString(lo.FromPtr(opt.ColorCode)),
 		SortOrder: opt.SortOrder,
-		Enabled:   opt.Enabled,
 	}
 }
 

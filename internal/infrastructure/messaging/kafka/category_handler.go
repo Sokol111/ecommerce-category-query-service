@@ -119,7 +119,6 @@ func mapAttributeOptions(options []events.AttributeOption) []categoryview.Attrib
 			Slug:      opt.Slug,
 			ColorCode: opt.ColorCode,
 			SortOrder: opt.SortOrder,
-			Enabled:   opt.Enabled,
 		}
 	}
 	return result

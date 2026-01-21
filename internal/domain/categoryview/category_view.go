@@ -8,7 +8,6 @@ type AttributeOption struct {
 	Slug      string
 	ColorCode *string
 	SortOrder int
-	Enabled   bool
 }
 
 // CategoryAttribute represents an attribute assigned to a category

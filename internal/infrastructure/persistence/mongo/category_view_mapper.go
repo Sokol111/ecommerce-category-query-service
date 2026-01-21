@@ -21,7 +21,6 @@ func (m *categoryViewMapper) ToEntity(domain *categoryview.CategoryView) *catego
 				Slug:      opt.Slug,
 				ColorCode: opt.ColorCode,
 				SortOrder: opt.SortOrder,
-				Enabled:   opt.Enabled,
 			})
 		}
 		attributes = append(attributes, categoryAttributeEntity{
@@ -60,7 +59,6 @@ func (m *categoryViewMapper) ToDomain(entity *categoryViewEntity) *categoryview.
 				Slug:      opt.Slug,
 				ColorCode: opt.ColorCode,
 				SortOrder: opt.SortOrder,
-				Enabled:   opt.Enabled,
 			})
 		}
 		attributes = append(attributes, categoryview.CategoryAttribute{

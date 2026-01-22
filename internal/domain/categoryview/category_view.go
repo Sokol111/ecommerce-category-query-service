@@ -2,27 +2,17 @@ package categoryview
 
 import "time"
 
-// AttributeOption represents an option for single/multiple type attributes
-type AttributeOption struct {
-	Name      string
-	Slug      string
-	ColorCode *string
-	SortOrder int
-}
-
-// CategoryAttribute represents an attribute assigned to a category
+// CategoryAttribute represents an attribute assignment to a category
+// Contains only immutable references and category-specific settings
+// Mutable data (name, type, unit, options) should be joined from attribute master data
 type CategoryAttribute struct {
-	AttributeID string
-	Name        string
-	Slug        string
-	Type        string
-	Unit        *string
-	Options     []AttributeOption
-	Role        string
-	Required    bool
-	SortOrder   int
-	Filterable  bool
-	Searchable  bool
+	AttributeID string // Reference to attribute definition (UUID)
+	Slug        string // Attribute URL-friendly identifier (immutable)
+	Role        string // variant or specification
+	Required    bool   // Whether required for products in this category
+	SortOrder   int    // Sort order for display in this category
+	Filterable  bool   // Whether filterable for this category
+	Searchable  bool   // Whether searchable for this category
 }
 
 // CategoryView - read model for category queries (CQRS query side)

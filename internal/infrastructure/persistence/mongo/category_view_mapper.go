@@ -1,6 +1,8 @@
 package mongo
 
 import (
+	"github.com/samber/lo"
+
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 	commonsmongo "github.com/Sokol111/ecommerce-commons/pkg/persistence/mongo"
 )
@@ -12,31 +14,17 @@ func newCategoryViewMapper() *categoryViewMapper {
 }
 
 func (m *categoryViewMapper) ToEntity(domain *categoryview.CategoryView) *categoryViewEntity {
-	attributes := make([]categoryAttributeEntity, 0, len(domain.Attributes))
-	for _, attr := range domain.Attributes {
-		options := make([]attributeOptionEntity, 0, len(attr.Options))
-		for _, opt := range attr.Options {
-			options = append(options, attributeOptionEntity{
-				Name:      opt.Name,
-				Slug:      opt.Slug,
-				ColorCode: opt.ColorCode,
-				SortOrder: opt.SortOrder,
-			})
-		}
-		attributes = append(attributes, categoryAttributeEntity{
+	attributes := lo.Map(domain.Attributes, func(attr categoryview.CategoryAttribute, _ int) categoryAttributeEntity {
+		return categoryAttributeEntity{
 			AttributeID: attr.AttributeID,
-			Name:        attr.Name,
 			Slug:        attr.Slug,
-			Type:        attr.Type,
-			Unit:        attr.Unit,
-			Options:     options,
 			Role:        attr.Role,
 			Required:    attr.Required,
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,
-		})
-	}
+		}
+	})
 
 	return &categoryViewEntity{
 		ID:         domain.ID,
@@ -50,31 +38,17 @@ func (m *categoryViewMapper) ToEntity(domain *categoryview.CategoryView) *catego
 }
 
 func (m *categoryViewMapper) ToDomain(entity *categoryViewEntity) *categoryview.CategoryView {
-	attributes := make([]categoryview.CategoryAttribute, 0, len(entity.Attributes))
-	for _, attr := range entity.Attributes {
-		options := make([]categoryview.AttributeOption, 0, len(attr.Options))
-		for _, opt := range attr.Options {
-			options = append(options, categoryview.AttributeOption{
-				Name:      opt.Name,
-				Slug:      opt.Slug,
-				ColorCode: opt.ColorCode,
-				SortOrder: opt.SortOrder,
-			})
-		}
-		attributes = append(attributes, categoryview.CategoryAttribute{
+	attributes := lo.Map(entity.Attributes, func(attr categoryAttributeEntity, _ int) categoryview.CategoryAttribute {
+		return categoryview.CategoryAttribute{
 			AttributeID: attr.AttributeID,
-			Name:        attr.Name,
 			Slug:        attr.Slug,
-			Type:        attr.Type,
-			Unit:        attr.Unit,
-			Options:     options,
 			Role:        attr.Role,
 			Required:    attr.Required,
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,
-		})
-	}
+		}
+	})
 
 	return categoryview.Reconstruct(
 		entity.ID,

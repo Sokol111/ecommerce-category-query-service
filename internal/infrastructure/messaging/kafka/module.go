@@ -10,6 +10,7 @@ import (
 func Module() fx.Option {
 	return fx.Options(
 		consumer.RegisterHandlerAndConsumer("category-events", newCategoryHandler),
+		consumer.RegisterHandlerAndConsumer("attribute-events", newAttributeHandler),
 		fx.Invoke(registerSchemas),
 	)
 }

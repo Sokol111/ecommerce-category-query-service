@@ -27,6 +27,8 @@ kafka:
     consumers:
       - name: "category-events"
         topic: "catalog.category.events"
+      - name: "attribute-events"
+        topic: "catalog.attribute.events"
 
 security:
   token:

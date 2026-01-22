@@ -9,6 +9,7 @@ import (
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/gen/httpapi"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application/query"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/attributeview"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/persistence"
 )
@@ -16,21 +17,24 @@ import (
 type categoryHandler struct {
 	getAllActiveCategoriesHandler query.GetAllActiveCategoriesQueryHandler
 	getCategoryByIDHandler        query.GetCategoryByIDQueryHandler
+	attributeRepo                 attributeview.Repository
 }
 
 func newCategoryHandler(
 	getAllActiveCategoriesHandler query.GetAllActiveCategoriesQueryHandler,
 	getCategoryByIDHandler query.GetCategoryByIDQueryHandler,
+	attributeRepo attributeview.Repository,
 ) httpapi.Handler {
 	return &categoryHandler{
 		getAllActiveCategoriesHandler: getAllActiveCategoriesHandler,
 		getCategoryByIDHandler:        getCategoryByIDHandler,
+		attributeRepo:                 attributeRepo,
 	}
 }
 
 var aboutBlankURL, _ = url.Parse("about:blank")
 
-func mapOption(opt categoryview.AttributeOption, _ int) httpapi.AttributeOption {
+func mapOption(opt attributeview.AttributeOption, _ int) httpapi.AttributeOption {
 	return httpapi.AttributeOption{
 		Name:      opt.Name,
 		Slug:      opt.Slug,
@@ -39,28 +43,60 @@ func mapOption(opt categoryview.AttributeOption, _ int) httpapi.AttributeOption 
 	}
 }
 
-func mapAttribute(attr categoryview.CategoryAttribute, _ int) httpapi.CategoryAttribute {
-	return httpapi.CategoryAttribute{
-		AttributeId: attr.AttributeID,
-		Name:        attr.Name,
-		Slug:        attr.Slug,
-		Type:        httpapi.AttributeType(attr.Type),
-		Unit:        httpapi.NewOptString(lo.FromPtr(attr.Unit)),
-		Options:     lo.Map(attr.Options, mapOption),
-		Role:        httpapi.AttributeRole(attr.Role),
-		Required:    attr.Required,
-		SortOrder:   attr.SortOrder,
-		Filterable:  attr.Filterable,
-		Searchable:  attr.Searchable,
+// toCategoryAttributes joins category attribute assignments with attribute master data
+// Returns enriched attributes, filtering out disabled attributes
+func (h *categoryHandler) toCategoryAttributes(ctx context.Context, attrs []categoryview.CategoryAttribute) ([]httpapi.CategoryAttribute, error) {
+	if len(attrs) == 0 {
+		return []httpapi.CategoryAttribute{}, nil
 	}
+
+	// Collect unique attribute IDs
+	attrIDs := lo.Map(attrs, func(attr categoryview.CategoryAttribute, _ int) string {
+		return attr.AttributeID
+	})
+
+	// Fetch attribute master data
+	masterAttrs, err := h.attributeRepo.FindByIDs(ctx, attrIDs)
+	if err != nil {
+		return nil, err
+	}
+
+	attrByID := lo.KeyBy(masterAttrs, func(attr *attributeview.AttributeView) string { return attr.ID })
+
+	return lo.FilterMap(attrs, func(attr categoryview.CategoryAttribute, _ int) (httpapi.CategoryAttribute, bool) {
+		master, ok := attrByID[attr.AttributeID]
+		// Skip if master data not found or attribute is disabled
+		if !ok || !master.Enabled {
+			return httpapi.CategoryAttribute{}, false
+		}
+
+		return httpapi.CategoryAttribute{
+			AttributeId: attr.AttributeID,
+			Name:        master.Name,
+			Slug:        attr.Slug,
+			Type:        httpapi.AttributeType(master.Type),
+			Unit:        httpapi.NewOptString(lo.FromPtr(master.Unit)),
+			Options:     lo.Map(master.Options, mapOption),
+			Role:        httpapi.AttributeRole(attr.Role),
+			Required:    attr.Required,
+			SortOrder:   attr.SortOrder,
+			Filterable:  attr.Filterable,
+			Searchable:  attr.Searchable,
+		}, true
+	}), nil
 }
 
-func toCategoryResponse(cat *categoryview.CategoryView) httpapi.CategoryResponse {
+func (h *categoryHandler) toCategoryResponse(ctx context.Context, cat *categoryview.CategoryView) (httpapi.CategoryResponse, error) {
+	attrs, err := h.toCategoryAttributes(ctx, cat.Attributes)
+	if err != nil {
+		return httpapi.CategoryResponse{}, err
+	}
+
 	return httpapi.CategoryResponse{
 		ID:         cat.ID,
 		Name:       cat.Name,
-		Attributes: lo.Map(cat.Attributes, mapAttribute),
-	}
+		Attributes: attrs,
+	}, nil
 }
 
 func (h *categoryHandler) GetAllActiveCategories(ctx context.Context) (httpapi.GetAllActiveCategoriesRes, error) {
@@ -71,9 +107,14 @@ func (h *categoryHandler) GetAllActiveCategories(ctx context.Context) (httpapi.G
 		return nil, err
 	}
 
-	response := lo.Map(categories, func(cat *categoryview.CategoryView, _ int) httpapi.CategoryResponse {
-		return toCategoryResponse(cat)
-	})
+	response := make([]httpapi.CategoryResponse, 0, len(categories))
+	for _, cat := range categories {
+		catResponse, err := h.toCategoryResponse(ctx, cat)
+		if err != nil {
+			return nil, err
+		}
+		response = append(response, catResponse)
+	}
 
 	return (*httpapi.GetAllActiveCategoriesOKApplicationJSON)(&response), nil
 }
@@ -94,6 +135,10 @@ func (h *categoryHandler) GetCategoryById(ctx context.Context, params httpapi.Ge
 		return nil, err
 	}
 
-	response := toCategoryResponse(category)
+	response, err := h.toCategoryResponse(ctx, category)
+	if err != nil {
+		return nil, err
+	}
+
 	return &response, nil
 }

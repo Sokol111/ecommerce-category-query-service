@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/samber/lo"
+
 	"github.com/Sokol111/ecommerce-catalog-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
@@ -82,46 +84,18 @@ func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.C
 	return nil
 }
 
-// mapAttributes converts event attributes to domain attributes using data from message
 func mapAttributes(eventAttrs []events.CategoryAttribute) []categoryview.CategoryAttribute {
-	if len(eventAttrs) == 0 {
-		return []categoryview.CategoryAttribute{}
-	}
-
-	attributes := make([]categoryview.CategoryAttribute, len(eventAttrs))
-	for i, attr := range eventAttrs {
-		attributes[i] = categoryview.CategoryAttribute{
+	return lo.Map(eventAttrs, func(attr events.CategoryAttribute, _ int) categoryview.CategoryAttribute {
+		return categoryview.CategoryAttribute{
 			AttributeID: attr.AttributeID,
-			Name:        attr.AttributeName,
 			Slug:        attr.AttributeSlug,
-			Type:        attr.AttributeType,
-			Unit:        attr.AttributeUnit,
-			Options:     mapAttributeOptions(attr.AttributeOptions),
 			Role:        attr.Role,
 			Required:    attr.Required,
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,
 		}
-	}
-
-	return attributes
-}
-
-func mapAttributeOptions(options []events.AttributeOption) []categoryview.AttributeOption {
-	if options == nil {
-		return []categoryview.AttributeOption{}
-	}
-	result := make([]categoryview.AttributeOption, len(options))
-	for i, opt := range options {
-		result[i] = categoryview.AttributeOption{
-			Name:      opt.Name,
-			Slug:      opt.Slug,
-			ColorCode: opt.ColorCode,
-			SortOrder: opt.SortOrder,
-		}
-	}
-	return result
+	})
 }
 
 func (h *categoryHandler) log(ctx context.Context) *zap.Logger {

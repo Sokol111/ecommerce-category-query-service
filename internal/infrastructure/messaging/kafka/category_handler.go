@@ -25,38 +25,11 @@ func newCategoryHandler(repo categoryview.Repository) *categoryHandler {
 
 func (h *categoryHandler) Process(ctx context.Context, event any) error {
 	switch evt := event.(type) {
-	case *events.CategoryCreatedEvent:
-		return h.handleCategoryCreated(ctx, evt)
 	case *events.CategoryUpdatedEvent:
 		return h.handleCategoryUpdated(ctx, evt)
 	default:
 		return fmt.Errorf("unhandled event type: %T: %w", event, consumer.ErrSkipMessage)
 	}
-}
-
-func (h *categoryHandler) handleCategoryCreated(ctx context.Context, e *events.CategoryCreatedEvent) error {
-	attributes := mapAttributes(e.Payload.Attributes)
-
-	view := categoryview.NewCategoryView(
-		e.Payload.CategoryID,
-		e.Payload.Version,
-		e.Payload.Name,
-		e.Payload.Enabled,
-		attributes,
-		e.Payload.CreatedAt,
-		e.Payload.ModifiedAt,
-	)
-
-	if err := h.repo.Upsert(ctx, view); err != nil {
-		return fmt.Errorf("failed to upsert category view: %w", err)
-	}
-
-	h.log(ctx).Debug("category view created",
-		zap.String("categoryID", e.Payload.CategoryID),
-		zap.String("eventID", e.Metadata.EventID),
-		zap.Int("version", e.Payload.Version))
-
-	return nil
 }
 
 func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.CategoryUpdatedEvent) error {

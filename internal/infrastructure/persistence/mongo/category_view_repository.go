@@ -2,7 +2,6 @@ package mongo
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
@@ -45,21 +44,5 @@ func (r *categoryViewRepository) Upsert(ctx context.Context, category *categoryv
 }
 
 func (r *categoryViewRepository) FindAllEnabled(ctx context.Context) ([]*categoryview.CategoryView, error) {
-	cursor, err := r.collection.Find(ctx, bson.M{"enabled": true})
-	if err != nil {
-		return nil, fmt.Errorf("failed to find enabled categories: %w", err)
-	}
-	defer cursor.Close(ctx)
-
-	var entities []categoryViewEntity
-	if err = cursor.All(ctx, &entities); err != nil {
-		return nil, fmt.Errorf("failed to decode categories: %w", err)
-	}
-
-	views := make([]*categoryview.CategoryView, 0, len(entities))
-	for i := range entities {
-		views = append(views, r.mapper.ToDomain(&entities[i]))
-	}
-
-	return views, nil
+	return r.FindAllWithFilter(ctx, bson.D{{Key: "enabled", Value: true}}, nil)
 }

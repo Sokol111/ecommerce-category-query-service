@@ -35,15 +35,6 @@ func (h *attributeHandler) Process(ctx context.Context, event any) error {
 }
 
 func (h *attributeHandler) handleAttributeUpdated(ctx context.Context, e *catalog_events.AttributeUpdatedEvent) error {
-	options := lo.Map(e.Payload.Options, func(opt catalog_events.AttributeOption, _ int) attributeview.AttributeOption {
-		return attributeview.AttributeOption{
-			Slug:      opt.Slug,
-			Name:      opt.Name,
-			ColorCode: opt.ColorCode,
-			SortOrder: opt.SortOrder,
-		}
-	})
-
 	view := attributeview.Reconstruct(
 		e.Payload.AttributeID,
 		e.Payload.Version,
@@ -53,7 +44,7 @@ func (h *attributeHandler) handleAttributeUpdated(ctx context.Context, e *catalo
 		e.Payload.Unit,
 		e.Payload.Enabled,
 		e.Payload.ModifiedAt,
-		options,
+		lo.Map(e.Payload.Options, mapAttributeOption),
 	)
 
 	if err := h.repo.Upsert(ctx, view); err != nil {
@@ -70,4 +61,13 @@ func (h *attributeHandler) handleAttributeUpdated(ctx context.Context, e *catalo
 
 func (h *attributeHandler) log(ctx context.Context) *zap.Logger {
 	return logger.Get(ctx)
+}
+
+func mapAttributeOption(opt catalog_events.AttributeOption, _ int) attributeview.AttributeOption {
+	return attributeview.AttributeOption{
+		Slug:      opt.Slug,
+		Name:      opt.Name,
+		ColorCode: opt.ColorCode,
+		SortOrder: opt.SortOrder,
+	}
 }

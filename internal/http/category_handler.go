@@ -43,25 +43,41 @@ func mapOption(opt attributeview.AttributeOption, _ int) httpapi.AttributeOption
 	}
 }
 
-// toCategoryAttributes joins category attribute assignments with attribute master data
-// Returns enriched attributes, filtering out disabled attributes
-func (h *categoryHandler) toCategoryAttributes(ctx context.Context, attrs []categoryview.CategoryAttribute) ([]httpapi.CategoryAttribute, error) {
-	if len(attrs) == 0 {
-		return []httpapi.CategoryAttribute{}, nil
+// fetchMasterAttributes collects all unique attribute IDs from categories and fetches them in a single batch query
+func (h *categoryHandler) fetchMasterAttributes(ctx context.Context, categories []*categoryview.CategoryView) (map[string]*attributeview.AttributeView, error) {
+	// Collect all unique attribute IDs from all categories
+	allAttrIDs := make(map[string]struct{})
+	for _, cat := range categories {
+		for _, attr := range cat.Attributes {
+			allAttrIDs[attr.AttributeID] = struct{}{}
+		}
 	}
 
-	// Collect unique attribute IDs
-	attrIDs := lo.Map(attrs, func(attr categoryview.CategoryAttribute, _ int) string {
-		return attr.AttributeID
-	})
+	if len(allAttrIDs) == 0 {
+		return make(map[string]*attributeview.AttributeView), nil
+	}
 
-	// Fetch attribute master data
+	// Convert to slice
+	attrIDs := make([]string, 0, len(allAttrIDs))
+	for id := range allAttrIDs {
+		attrIDs = append(attrIDs, id)
+	}
+
+	// Single batch query for all attributes
 	masterAttrs, err := h.attributeRepo.FindByIDs(ctx, attrIDs)
 	if err != nil {
 		return nil, err
 	}
 
-	attrByID := lo.KeyBy(masterAttrs, func(attr *attributeview.AttributeView) string { return attr.ID })
+	return lo.KeyBy(masterAttrs, func(attr *attributeview.AttributeView) string { return attr.ID }), nil
+}
+
+// toCategoryAttributesWithMasterData joins category attribute assignments with pre-fetched attribute master data
+// Returns enriched attributes, filtering out disabled attributes
+func toCategoryAttributesWithMasterData(attrs []categoryview.CategoryAttribute, attrByID map[string]*attributeview.AttributeView) []httpapi.CategoryAttribute {
+	if len(attrs) == 0 {
+		return []httpapi.CategoryAttribute{}
+	}
 
 	return lo.FilterMap(attrs, func(attr categoryview.CategoryAttribute, _ int) (httpapi.CategoryAttribute, bool) {
 		master, ok := attrByID[attr.AttributeID]
@@ -83,7 +99,39 @@ func (h *categoryHandler) toCategoryAttributes(ctx context.Context, attrs []cate
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,
 		}, true
-	}), nil
+	})
+}
+
+// toCategoryResponseWithMasterData converts a category view to HTTP response using pre-fetched master data
+func toCategoryResponseWithMasterData(cat *categoryview.CategoryView, attrByID map[string]*attributeview.AttributeView) httpapi.CategoryResponse {
+	return httpapi.CategoryResponse{
+		ID:         cat.ID,
+		Name:       cat.Name,
+		Attributes: toCategoryAttributesWithMasterData(cat.Attributes, attrByID),
+	}
+}
+
+// toCategoryAttributes joins category attribute assignments with attribute master data
+// Returns enriched attributes, filtering out disabled attributes
+func (h *categoryHandler) toCategoryAttributes(ctx context.Context, attrs []categoryview.CategoryAttribute) ([]httpapi.CategoryAttribute, error) {
+	if len(attrs) == 0 {
+		return []httpapi.CategoryAttribute{}, nil
+	}
+
+	// Collect unique attribute IDs
+	attrIDs := lo.Map(attrs, func(attr categoryview.CategoryAttribute, _ int) string {
+		return attr.AttributeID
+	})
+
+	// Fetch attribute master data
+	masterAttrs, err := h.attributeRepo.FindByIDs(ctx, attrIDs)
+	if err != nil {
+		return nil, err
+	}
+
+	attrByID := lo.KeyBy(masterAttrs, func(attr *attributeview.AttributeView) string { return attr.ID })
+
+	return toCategoryAttributesWithMasterData(attrs, attrByID), nil
 }
 
 func (h *categoryHandler) toCategoryResponse(ctx context.Context, cat *categoryview.CategoryView) (httpapi.CategoryResponse, error) {
@@ -107,13 +155,16 @@ func (h *categoryHandler) GetAllActiveCategories(ctx context.Context) (httpapi.G
 		return nil, err
 	}
 
+	// Fetch all attribute master data in a single batch query (N+1 fix)
+	attrByID, err := h.fetchMasterAttributes(ctx, categories)
+	if err != nil {
+		return nil, err
+	}
+
+	// Convert to response using pre-fetched master data
 	response := make([]httpapi.CategoryResponse, 0, len(categories))
 	for _, cat := range categories {
-		catResponse, err := h.toCategoryResponse(ctx, cat)
-		if err != nil {
-			return nil, err
-		}
-		response = append(response, catResponse)
+		response = append(response, toCategoryResponseWithMasterData(cat, attrByID))
 	}
 
 	return (*httpapi.GetAllActiveCategoriesOKApplicationJSON)(&response), nil

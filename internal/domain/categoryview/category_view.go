@@ -39,16 +39,3 @@ func Reconstruct(id string, version int, name string, enabled bool, attributes [
 		ModifiedAt: modifiedAt,
 	}
 }
-
-// NewCategoryView creates a new category view from event data
-func NewCategoryView(id string, version int, name string, enabled bool, attributes []CategoryAttribute, createdAt, modifiedAt time.Time) *CategoryView {
-	return &CategoryView{
-		ID:         id,
-		Version:    version,
-		Name:       name,
-		Enabled:    enabled,
-		Attributes: attributes,
-		CreatedAt:  createdAt,
-		ModifiedAt: modifiedAt,
-	}
-}

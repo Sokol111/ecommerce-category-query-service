@@ -47,7 +47,7 @@ func (r *attributeViewRepository) Upsert(ctx context.Context, attribute *attribu
 
 func (r *attributeViewRepository) FindByIDs(ctx context.Context, ids []string) ([]*attributeview.AttributeView, error) {
 	if len(ids) == 0 {
-		return nil, nil
+		return []*attributeview.AttributeView{}, nil
 	}
 	return r.FindAllWithFilter(ctx, bson.D{{Key: "_id", Value: bson.M{"$in": ids}}}, nil)
 }

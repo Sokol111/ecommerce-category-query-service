@@ -35,7 +35,7 @@ func (h *categoryHandler) Process(ctx context.Context, event any) error {
 func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.CategoryUpdatedEvent) error {
 	attributes := mapAttributes(e.Payload.Attributes)
 
-	view := categoryview.NewCategoryView(
+	view := categoryview.Reconstruct(
 		e.Payload.CategoryID,
 		e.Payload.Version,
 		e.Payload.Name,

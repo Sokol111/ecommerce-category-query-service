@@ -41,7 +41,7 @@ func AttributeClientModule() fx.Option {
 
 func provideCatalogApiClient(
 	httpClient *http.Client,
-	cfg httpclient.ClientConfig,
+	cfg httpclient.Config,
 	securitySource *serviceSecuritySource,
 	tracerProvider trace.TracerProvider,
 	meterProvider metric.MeterProvider,

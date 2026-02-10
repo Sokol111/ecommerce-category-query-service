@@ -8,30 +8,30 @@ import (
 	"github.com/Sokol111/ecommerce-category-query-service/internal/http"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/messaging/kafka"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/persistence/mongo"
-	"github.com/Sokol111/ecommerce-commons/pkg/modules"
-	"github.com/Sokol111/ecommerce-commons/pkg/swaggerui"
+	commons_core "github.com/Sokol111/ecommerce-commons/pkg/core"
+	commons_http "github.com/Sokol111/ecommerce-commons/pkg/http"
+	commons_messaging "github.com/Sokol111/ecommerce-commons/pkg/messaging"
+	commons_observability "github.com/Sokol111/ecommerce-commons/pkg/observability"
+	commons_persistence "github.com/Sokol111/ecommerce-commons/pkg/persistence"
+	commons_swaggerui "github.com/Sokol111/ecommerce-commons/pkg/swaggerui"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
 
 var AppModules = fx.Options(
-	// Infrastructure
-	modules.NewCoreModule(),
-	modules.NewPersistenceModule(),
-	modules.NewHTTPModule(),
-	modules.NewObservabilityModule(),
-	modules.NewMessagingModule(),
+	// Commons
+	commons_core.NewCoreModule(),
+	commons_persistence.NewPersistenceModule(),
+	commons_http.NewHTTPModule(),
+	commons_observability.NewObservabilityModule(),
+	commons_messaging.NewMessagingModule(),
+	commons_swaggerui.NewSwaggerModule(commons_swaggerui.SwaggerConfig{OpenAPIContent: httpapi.OpenAPIDoc}),
 
-	// Domain & Application
+	// Application
 	mongo.Module(),
 	application.Module(),
-
-	// Messaging
 	kafka.Module(),
-
-	// HTTP
-	http.NewHttpHandlerModule(),
-	swaggerui.NewSwaggerModule(swaggerui.SwaggerConfig{OpenAPIContent: httpapi.OpenAPIDoc}),
+	http.Module(),
 )
 
 func main() {

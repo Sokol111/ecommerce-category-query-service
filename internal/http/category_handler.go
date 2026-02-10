@@ -11,7 +11,7 @@ import (
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application/query"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/attributeview"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
-	"github.com/Sokol111/ecommerce-commons/pkg/persistence"
+	"github.com/Sokol111/ecommerce-commons/pkg/persistence/mongo"
 )
 
 type categoryHandler struct {
@@ -175,7 +175,7 @@ func (h *categoryHandler) GetCategoryById(ctx context.Context, params httpapi.Ge
 
 	category, err := h.getCategoryByIDHandler.Handle(ctx, q)
 	if err != nil {
-		if errors.Is(err, persistence.ErrEntityNotFound) {
+		if errors.Is(err, mongo.ErrEntityNotFound) {
 			return &httpapi.GetCategoryByIdNotFound{
 				Type:   *aboutBlankURL,
 				Title:  "Category not found",

@@ -3,6 +3,7 @@ package http
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/url"
 
 	"github.com/samber/lo"
@@ -20,6 +21,16 @@ type categoryHandler struct {
 	attributeRepo                 attributeview.Repository
 }
 
+var aboutBlankURL *url.URL
+
+func init() {
+	var err error
+	aboutBlankURL, err = url.Parse("about:blank")
+	if err != nil {
+		panic(fmt.Sprintf("failed to parse about:blank URL: %v", err))
+	}
+}
+
 func newCategoryHandler(
 	getAllActiveCategoriesHandler query.GetAllActiveCategoriesQueryHandler,
 	getCategoryByIDHandler query.GetCategoryByIDQueryHandler,
@@ -31,8 +42,6 @@ func newCategoryHandler(
 		attributeRepo:                 attributeRepo,
 	}
 }
-
-var aboutBlankURL, _ = url.Parse("about:blank")
 
 func mapOption(opt attributeview.AttributeOption, _ int) httpapi.AttributeOption {
 	return httpapi.AttributeOption{
@@ -170,7 +179,7 @@ func (h *categoryHandler) GetAllActiveCategories(ctx context.Context) (httpapi.G
 	return (*httpapi.GetAllActiveCategoriesOKApplicationJSON)(&response), nil
 }
 
-func (h *categoryHandler) GetCategoryById(ctx context.Context, params httpapi.GetCategoryByIdParams) (httpapi.GetCategoryByIdRes, error) {
+func (h *categoryHandler) GetCategoryById(ctx context.Context, params httpapi.GetCategoryByIdParams) (httpapi.GetCategoryByIdRes, error) { //nolint:revive // method name defined by ogen-generated interface
 	q := query.GetCategoryByIDQuery{ID: params.ID}
 
 	category, err := h.getCategoryByIDHandler.Handle(ctx, q)

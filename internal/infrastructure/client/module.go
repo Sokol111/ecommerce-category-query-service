@@ -34,12 +34,12 @@ func AttributeClientModule() fx.Option {
 			httpclient.ProvideHTTPClient("catalog-service"),
 			newServiceSecuritySource,
 		),
-		fx.Provide(provideCatalogApiClient),
+		fx.Provide(provideCatalogAPIClient),
 		fx.Provide(newAttributeClient),
 	)
 }
 
-func provideCatalogApiClient(
+func provideCatalogAPIClient(
 	httpClient *http.Client,
 	cfg httpclient.Config,
 	securitySource *serviceSecuritySource,

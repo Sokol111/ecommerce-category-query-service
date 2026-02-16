@@ -3,9 +3,9 @@ module github.com/Sokol111/ecommerce-category-query-service
 go 1.26.0
 
 require (
-	github.com/Sokol111/ecommerce-catalog-service-api v1.0.10
+	github.com/Sokol111/ecommerce-catalog-service-api v1.0.11
 	github.com/Sokol111/ecommerce-category-query-service-api v1.0.14
-	github.com/Sokol111/ecommerce-commons v0.4.4
+	github.com/Sokol111/ecommerce-commons v0.4.6
 	github.com/google/uuid v1.6.0
 	github.com/samber/lo v1.52.0
 	go.mongodb.org/mongo-driver/v2 v2.5.0
@@ -45,15 +45,20 @@ require (
 	github.com/go-openapi/swag/typeutils v0.25.4 // indirect
 	github.com/go-openapi/swag/yamlutils v0.25.4 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
+	github.com/golang-migrate/migrate/v4 v4.19.1 // indirect
+	github.com/golang/snappy v1.0.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.8 // indirect
 	github.com/hamba/avro/v2 v2.31.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/moby/sys/atomicwriter v0.1.0 // indirect
 	github.com/moby/sys/mountinfo v0.7.2 // indirect
+	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/ogen-go/ogen v1.19.0 // indirect
 	github.com/segmentio/asm v1.2.1 // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
+	go.mongodb.org/mongo-driver v1.17.9 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
+	go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/v2/mongo/otelmongo v0.0.0-20260216124648-a1952b4487d0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.65.0 // indirect
 	go.opentelemetry.io/otel v1.40.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v1.40.0 // indirect

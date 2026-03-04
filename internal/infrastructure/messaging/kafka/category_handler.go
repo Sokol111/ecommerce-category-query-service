@@ -63,7 +63,6 @@ func mapAttributes(eventAttrs []events.CategoryAttribute) []categoryview.Categor
 			AttributeID: attr.AttributeID,
 			Slug:        attr.AttributeSlug,
 			Role:        attr.Role,
-			Required:    attr.Required,
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,

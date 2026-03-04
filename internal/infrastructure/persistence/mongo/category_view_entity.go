@@ -10,7 +10,6 @@ type categoryAttributeEntity struct {
 	AttributeID string `bson:"attributeId"`
 	Slug        string `bson:"slug"`
 	Role        string `bson:"role"`
-	Required    bool   `bson:"required"`
 	SortOrder   int    `bson:"sortOrder"`
 	Filterable  bool   `bson:"filterable"`
 	Searchable  bool   `bson:"searchable"`

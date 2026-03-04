@@ -9,7 +9,6 @@ type CategoryAttribute struct {
 	AttributeID string // Reference to attribute definition (UUID)
 	Slug        string // Attribute URL-friendly identifier (immutable)
 	Role        string // variant or specification
-	Required    bool   // Whether required for products in this category
 	SortOrder   int    // Sort order for display in this category
 	Filterable  bool   // Whether filterable for this category
 	Searchable  bool   // Whether searchable for this category

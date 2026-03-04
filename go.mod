@@ -3,8 +3,8 @@ module github.com/Sokol111/ecommerce-category-query-service
 go 1.26.0
 
 require (
-	github.com/Sokol111/ecommerce-catalog-service-api v1.0.11
-	github.com/Sokol111/ecommerce-category-query-service-api v1.0.14
+	github.com/Sokol111/ecommerce-catalog-service-api v1.0.15
+	github.com/Sokol111/ecommerce-category-query-service-api v1.0.16
 	github.com/Sokol111/ecommerce-commons v0.4.6
 	github.com/google/uuid v1.6.0
 	github.com/samber/lo v1.52.0

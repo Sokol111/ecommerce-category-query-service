@@ -12,8 +12,6 @@ mongo:
   #  username: "root"
   #  password: "password"
   database: "category-query"
-  migrations:
-    enabled: true
 
 kafka:
   brokers: "localhost:9092"

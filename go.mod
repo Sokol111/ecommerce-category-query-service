@@ -4,8 +4,8 @@ go 1.26.1
 
 require (
 	github.com/Sokol111/ecommerce-catalog-service-api v1.1.0
-	github.com/Sokol111/ecommerce-category-query-service-api v1.1.0
-	github.com/Sokol111/ecommerce-commons v0.5.1
+	github.com/Sokol111/ecommerce-category-query-service-api v1.1.2
+	github.com/Sokol111/ecommerce-commons v0.5.3
 	github.com/google/uuid v1.6.0
 	github.com/samber/lo v1.53.0
 	go.mongodb.org/mongo-driver/v2 v2.5.0

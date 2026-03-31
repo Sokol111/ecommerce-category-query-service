@@ -10,8 +10,8 @@ github.com/Sokol111/ecommerce-catalog-service-api v1.1.4 h1:dpWy3SBg7X2X2wIcY472
 github.com/Sokol111/ecommerce-catalog-service-api v1.1.4/go.mod h1:frWc5XuwYbQ7iuvm5dN03z1LiC3BHZCPBglnVtimoSw=
 github.com/Sokol111/ecommerce-category-query-service-api v1.1.2 h1:g3pAYCVnHoZ4BsqwsQy+qsfxDBomhaP/U/I8R9fiHQE=
 github.com/Sokol111/ecommerce-category-query-service-api v1.1.2/go.mod h1:tK0DW1q3v1+azGYtgY2aGeYNH3ozHFN5n1EtHJXs04Q=
-github.com/Sokol111/ecommerce-commons v0.5.8 h1:8IVrGMhQjcU1DxKDWq4xCy+sJXgmfPknc7+29HiO/jE=
-github.com/Sokol111/ecommerce-commons v0.5.8/go.mod h1:0f9WhUwn+HGECO50BHVwarunfM49kfCO4tm56zkf6eM=
+github.com/Sokol111/ecommerce-commons v0.5.9 h1:cfUxJ8VrQQk1EuX5zbeldlPQ+TVxLoUPl/LfhOvPyik=
+github.com/Sokol111/ecommerce-commons v0.5.9/go.mod h1:0f9WhUwn+HGECO50BHVwarunfM49kfCO4tm56zkf6eM=
 github.com/cenkalti/backoff/v4 v4.3.0 h1:MyRJ/UdXutAwSAT+s3wNd7MfTIcy71VQueUuFK343L8=
 github.com/cenkalti/backoff/v4 v4.3.0/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyYozVcomhLiZE=
 github.com/cenkalti/backoff/v5 v5.0.3 h1:ZN+IMa753KfX5hd8vVaMixjnqRZ3y8CuJKRKj1xcsSM=

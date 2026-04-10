@@ -15,6 +15,7 @@ import (
 	commons_persistence "github.com/Sokol111/ecommerce-commons/pkg/persistence"
 	commons_pprof "github.com/Sokol111/ecommerce-commons/pkg/pprof"
 	commons_swaggerui "github.com/Sokol111/ecommerce-commons/pkg/swaggerui"
+	"github.com/Sokol111/ecommerce-commons/pkg/tenant"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
@@ -28,6 +29,9 @@ var AppModules = fx.Options(
 	commons_messaging.NewMessagingModule(),
 	commons_pprof.NewPprofModule(),
 	commons_swaggerui.NewSwaggerModule(commons_swaggerui.SwaggerConfig{OpenAPIContent: httpapi.OpenAPIDoc}),
+
+	// Tenant
+	tenant.MiddlewareModule(),
 
 	// Application
 	mongo.Module(),

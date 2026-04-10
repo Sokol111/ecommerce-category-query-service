@@ -3,10 +3,10 @@ module github.com/Sokol111/ecommerce-category-query-service
 go 1.26.2
 
 require (
-	github.com/Sokol111/ecommerce-catalog-service-api v1.1.6
+	github.com/Sokol111/ecommerce-catalog-service-api v1.1.7
 	github.com/Sokol111/ecommerce-category-query-service-api v1.1.3
-	github.com/Sokol111/ecommerce-commons v0.6.2
-	github.com/google/uuid v1.6.0
+	github.com/Sokol111/ecommerce-commons v0.6.5
+	github.com/Sokol111/ecommerce-tenant-service-api v0.0.5
 	github.com/samber/lo v1.53.0
 	go.mongodb.org/mongo-driver/v2 v2.5.0
 )
@@ -28,6 +28,7 @@ require (
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/golang-migrate/migrate/v4 v4.19.1 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0 // indirect
 	github.com/hamba/avro/v2 v2.31.0 // indirect
 	github.com/knadh/koanf/maps v0.1.2 // indirect
@@ -49,7 +50,7 @@ require (
 	github.com/twmb/franz-go/pkg/sr v1.7.0 // indirect
 	go.mongodb.org/mongo-driver v1.17.9 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
-	go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/v2/mongo/otelmongo v0.0.0-20260410073023-617f5be09708 // indirect
+	go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/v2/mongo/otelmongo v0.0.0-20260410075055-97de447de287 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.68.0 // indirect
 	go.opentelemetry.io/otel v1.43.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v1.43.0 // indirect
@@ -61,7 +62,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.43.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.10.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90 // indirect
+	golang.org/x/exp v0.0.0-20260410095643-746e56fc9e2f // indirect
 	golang.org/x/time v0.15.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260406210006-6f92a3bedf2d // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260406210006-6f92a3bedf2d // indirect

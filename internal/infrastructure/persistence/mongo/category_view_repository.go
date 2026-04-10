@@ -15,8 +15,8 @@ type categoryViewRepository struct {
 	mapper *categoryViewMapper
 }
 
-func newCategoryViewRepository(mongo commonsmongo.Mongo, mapper *categoryViewMapper) (categoryview.Repository, error) {
-	genericRepo, err := commonsmongo.NewGenericRepository(mongo.GetCollection("category_view"), mapper)
+func newCategoryViewRepository(admin commonsmongo.Admin, mapper *categoryViewMapper) (categoryview.Repository, error) {
+	genericRepo, err := commonsmongo.NewTenantRepository(admin, "category_view", mapper)
 	if err != nil {
 		return nil, err
 	}

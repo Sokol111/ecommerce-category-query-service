@@ -41,8 +41,9 @@ kafka:
 
 security:
   token:
-    public-key: "eb6ebefd6a2b0a304d43c2ccca329aef0a1439d429dbe8ca9b6190622ce38341"
-    service-token: "v4.public.eyJleHAiOiIyMDM2LTA0LTA3VDIzOjQ2OjI3KzAyOjAwIiwiaWF0IjoiMjAyNi0wNC0xMFQyMzo0NjoyNyswMjowMCIsIm5iZiI6IjIwMjYtMDQtMTBUMjM6NDY6MjcrMDI6MDAiLCJwZXJtaXNzaW9ucyI6WyJwcm9kdWN0czpyZWFkIiwiY2F0ZWdvcmllczpyZWFkIiwiYXR0cmlidXRlczpyZWFkIiwidGVuYW50czpyZWFkIl0sInJvbGUiOiJzZXJ2aWNlX2FjY291bnQiLCJzZXJ2aWNlX25hbWUiOiJjYXRlZ29yeS1xdWVyeS1zZXJ2aWNlIiwic3ViIjoic2VydmljZTpjYXRlZ29yeS1xdWVyeS1zZXJ2aWNlIiwidHlwZSI6ImFjY2VzcyJ94uVyQcokUZSyJcLgzp5qKmgsg8w89Ar9tYnknQBuPh0pgMrZBhGFaZw6fXWVU4fL_6TK1jIVjDLc06QeiAhWAQ"
+    jwks-url: "http://zitadel-api:8080/oauth/v2/keys"
+  s2s:
+    token-url: "http://zitadel-api:8080/oauth/v2/token"
 
 clients:
   tenant-service:

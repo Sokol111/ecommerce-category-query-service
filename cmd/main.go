@@ -5,9 +5,9 @@ import (
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/gen/httpapi"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/http"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/messaging/kafka"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/persistence/mongo"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/inbound/http"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/inbound/kafka"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/infrastructure/outbound/mongo"
 	commons_core "github.com/Sokol111/ecommerce-commons/pkg/core"
 	commons_http "github.com/Sokol111/ecommerce-commons/pkg/http"
 	commons_messaging "github.com/Sokol111/ecommerce-commons/pkg/messaging"

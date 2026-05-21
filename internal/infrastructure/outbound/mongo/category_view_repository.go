@@ -3,7 +3,7 @@ package mongo
 import (
 	"context"
 
-	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/application/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
 	commonsmongo "github.com/Sokol111/ecommerce-commons/pkg/persistence/mongo"
 	"go.mongodb.org/mongo-driver/v2/bson"

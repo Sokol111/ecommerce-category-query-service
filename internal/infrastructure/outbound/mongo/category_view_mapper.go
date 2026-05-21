@@ -3,7 +3,7 @@ package mongo
 import (
 	"github.com/samber/lo"
 
-	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/application/categoryview"
 	commonsmongo "github.com/Sokol111/ecommerce-commons/pkg/persistence/mongo"
 )
 

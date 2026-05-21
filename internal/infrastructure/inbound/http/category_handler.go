@@ -9,15 +9,14 @@ import (
 	"github.com/samber/lo"
 
 	"github.com/Sokol111/ecommerce-category-query-service-api/gen/httpapi"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/application/query"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/attributeview"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/application/attributeview"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/application/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/persistence/mongo"
 )
 
 type categoryHandler struct {
-	getAllActiveCategoriesHandler query.GetAllActiveCategoriesQueryHandler
-	getCategoryByIDHandler        query.GetCategoryByIDQueryHandler
+	getAllActiveCategoriesHandler categoryview.GetAllActiveCategoriesQueryHandler
+	getCategoryByIDHandler        categoryview.GetCategoryByIDQueryHandler
 	attributeRepo                 attributeview.Repository
 }
 
@@ -32,8 +31,8 @@ func init() {
 }
 
 func newCategoryHandler(
-	getAllActiveCategoriesHandler query.GetAllActiveCategoriesQueryHandler,
-	getCategoryByIDHandler query.GetCategoryByIDQueryHandler,
+	getAllActiveCategoriesHandler categoryview.GetAllActiveCategoriesQueryHandler,
+	getCategoryByIDHandler categoryview.GetCategoryByIDQueryHandler,
 	attributeRepo attributeview.Repository,
 ) httpapi.Handler {
 	return &categoryHandler{
@@ -156,7 +155,7 @@ func (h *categoryHandler) toCategoryResponse(ctx context.Context, cat *categoryv
 }
 
 func (h *categoryHandler) GetAllActiveCategories(ctx context.Context) (httpapi.GetAllActiveCategoriesRes, error) {
-	q := query.GetAllActiveCategoriesQuery{}
+	q := categoryview.GetAllActiveCategoriesQuery{}
 
 	categories, err := h.getAllActiveCategoriesHandler.Handle(ctx, q)
 	if err != nil {
@@ -179,7 +178,7 @@ func (h *categoryHandler) GetAllActiveCategories(ctx context.Context) (httpapi.G
 }
 
 func (h *categoryHandler) GetCategoryById(ctx context.Context, params httpapi.GetCategoryByIdParams) (httpapi.GetCategoryByIdRes, error) { //nolint:revive // method name defined by ogen-generated interface
-	q := query.GetCategoryByIDQuery{ID: params.ID}
+	q := categoryview.GetCategoryByIDQuery{ID: params.ID}
 
 	category, err := h.getCategoryByIDHandler.Handle(ctx, q)
 	if err != nil {

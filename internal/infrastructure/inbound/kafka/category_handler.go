@@ -7,19 +7,19 @@ import (
 	"github.com/samber/lo"
 
 	"github.com/Sokol111/ecommerce-catalog-service-api/gen/events"
-	"github.com/Sokol111/ecommerce-category-query-service/internal/domain/categoryview"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/application/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
 	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
 	"go.uber.org/zap"
 )
 
 type categoryHandler struct {
-	repo categoryview.Repository
+	upsertHandler categoryview.UpsertCategoryCommandHandler
 }
 
-func newCategoryHandler(repo categoryview.Repository) *categoryHandler {
+func newCategoryHandler(upsertHandler categoryview.UpsertCategoryCommandHandler) *categoryHandler {
 	return &categoryHandler{
-		repo: repo,
+		upsertHandler: upsertHandler,
 	}
 }
 
@@ -45,8 +45,9 @@ func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.C
 		e.Payload.ModifiedAt,
 	)
 
-	if err := h.repo.Upsert(ctx, view); err != nil {
-		return fmt.Errorf("failed to upsert category view: %w", err)
+	cmd := categoryview.UpsertCategoryCommand{Category: view}
+	if err := h.upsertHandler.Handle(ctx, cmd); err != nil {
+		return err
 	}
 
 	h.log(ctx).Debug("category view updated",

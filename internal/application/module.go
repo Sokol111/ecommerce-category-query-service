@@ -1,7 +1,8 @@
 package application
 
 import (
-	"github.com/Sokol111/ecommerce-category-query-service/internal/application/query"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/application/attributeview"
+	"github.com/Sokol111/ecommerce-category-query-service/internal/application/categoryview"
 	"go.uber.org/fx"
 )
 
@@ -10,8 +11,13 @@ func Module() fx.Option {
 	return fx.Options(
 		// Query handlers
 		fx.Provide(
-			query.NewGetCategoryByIDHandler,
-			query.NewGetAllActiveCategoriesHandler,
+			categoryview.NewGetCategoryByIDHandler,
+			categoryview.NewGetAllActiveCategoriesHandler,
+		),
+		// Command handlers
+		fx.Provide(
+			categoryview.NewUpsertCategoryHandler,
+			attributeview.NewUpsertAttributeHandler,
 		),
 	)
 }

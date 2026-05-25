@@ -62,6 +62,6 @@ observability:
   metrics:
     enabled: false
 
-pprof:
+pyroscope:
   enabled: true
-  port: 6060
+  endpoint: "http://pyroscope:4040"

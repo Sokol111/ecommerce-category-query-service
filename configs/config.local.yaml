@@ -56,12 +56,11 @@ clients:
     base-url: "http://ecommerce-tenant-service:8080"
 
 observability:
-  otel-collector-endpoint: "otel-collector-opentelemetry-collector.observability.svc:4317"
+  otel-collector-endpoint: "alloy.observability.svc:4317"
   tracing:
     enabled: true
   metrics:
     enabled: false
-
-pyroscope:
-  enabled: true
-  endpoint: "http://pyroscope:4040"
+  profiling:
+    enabled: true
+    endpoint: "http://alloy.observability.svc:4040"

@@ -2,12 +2,10 @@ package kafka
 
 import (
 	"context"
-	"fmt"
 
 	catalog_events "github.com/Sokol111/ecommerce-catalog-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application/attributeview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
-	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 )
@@ -22,19 +20,7 @@ func newAttributeHandler(upsertHandler attributeview.UpsertAttributeCommandHandl
 	}
 }
 
-func (h *attributeHandler) Process(ctx context.Context, event any) error {
-	switch evt := event.(type) {
-	case *catalog_events.AttributeUpdatedEvent:
-		return h.handleAttributeUpdated(ctx, evt)
-
-	default:
-		logger.Get(ctx).Warn("unknown event type, skipping",
-			zap.String("type", fmt.Sprintf("%T", event)))
-		return fmt.Errorf("unhandled event type: %T: %w", event, consumer.ErrSkipMessage)
-	}
-}
-
-func (h *attributeHandler) handleAttributeUpdated(ctx context.Context, e *catalog_events.AttributeUpdatedEvent) error {
+func (h *attributeHandler) HandleAttributeUpdated(ctx context.Context, e *catalog_events.AttributeUpdatedEvent) error {
 	view := attributeview.Reconstruct(
 		e.Payload.AttributeID,
 		e.Payload.Version,

@@ -2,14 +2,12 @@ package kafka
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/samber/lo"
 
 	"github.com/Sokol111/ecommerce-catalog-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
-	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
 	"go.uber.org/zap"
 )
 
@@ -23,16 +21,7 @@ func newCategoryHandler(upsertHandler categoryview.UpsertCategoryCommandHandler)
 	}
 }
 
-func (h *categoryHandler) Process(ctx context.Context, event any) error {
-	switch evt := event.(type) {
-	case *events.CategoryUpdatedEvent:
-		return h.handleCategoryUpdated(ctx, evt)
-	default:
-		return fmt.Errorf("unhandled event type: %T: %w", event, consumer.ErrSkipMessage)
-	}
-}
-
-func (h *categoryHandler) handleCategoryUpdated(ctx context.Context, e *events.CategoryUpdatedEvent) error {
+func (h *categoryHandler) HandleCategoryUpdated(ctx context.Context, e *events.CategoryUpdatedEvent) error {
 	attributes := mapAttributes(e.Payload.Attributes)
 
 	view := categoryview.Reconstruct(

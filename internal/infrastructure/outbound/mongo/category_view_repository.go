@@ -6,6 +6,7 @@ import (
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
 	commonsmongo "github.com/Sokol111/ecommerce-commons/pkg/persistence/mongo"
+	"github.com/Sokol111/ecommerce-commons/pkg/tenant"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.uber.org/zap"
 )
@@ -16,7 +17,7 @@ type categoryViewRepository struct {
 }
 
 func newCategoryViewRepository(admin commonsmongo.Admin, mapper *categoryViewMapper) (categoryview.Repository, error) {
-	genericRepo, err := commonsmongo.NewTenantRepository(admin, "category_view", mapper)
+	genericRepo, err := commonsmongo.NewTenantRepository(admin, "category_view", mapper, tenant.MustSlugFromContext)
 	if err != nil {
 		return nil, err
 	}

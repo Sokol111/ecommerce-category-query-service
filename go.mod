@@ -1,12 +1,12 @@
 module github.com/Sokol111/ecommerce-category-query-service
 
-go 1.26.3
+go 1.26.4
 
 require (
-	github.com/Sokol111/ecommerce-catalog-service-api v1.2.2
-	github.com/Sokol111/ecommerce-category-query-service-api v1.1.8
-	github.com/Sokol111/ecommerce-commons v0.8.1
-	github.com/Sokol111/ecommerce-tenant-service-api v0.1.5
+	github.com/Sokol111/ecommerce-catalog-service-api v1.2.3
+	github.com/Sokol111/ecommerce-category-query-service-api v1.1.9
+	github.com/Sokol111/ecommerce-commons v0.8.3
+	github.com/Sokol111/ecommerce-tenant-service-api v0.1.6
 	github.com/samber/lo v1.53.0
 	go.mongodb.org/mongo-driver/v2 v2.6.0
 )

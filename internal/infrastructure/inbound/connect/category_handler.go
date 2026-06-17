@@ -102,7 +102,7 @@ func toProtoCategory(cat *categoryview.CategoryView, attrByID map[string]*attrib
 				Name:      o.Name,
 				Slug:      o.Slug,
 				ColorCode: o.ColorCode,
-				SortOrder: int32(o.SortOrder),
+				SortOrder: int32(o.SortOrder), //nolint:gosec // SortOrder is a small integer, cannot overflow int32
 			}
 		}
 
@@ -114,7 +114,7 @@ func toProtoCategory(cat *categoryview.CategoryView, attrByID map[string]*attrib
 			Unit:        master.Unit,
 			Options:     opts,
 			Role:        stringToProtoCategoryAttributeRole(attr.Role),
-			SortOrder:   int32(attr.SortOrder),
+			SortOrder:   int32(attr.SortOrder), //nolint:gosec // SortOrder is a small integer, cannot overflow int32
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,
 		}, true

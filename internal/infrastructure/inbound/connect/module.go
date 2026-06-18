@@ -44,7 +44,7 @@ func registerConnectRoutes(
 
 func provideProcedurePermissions() validation.ProcedurePermissions {
 	return validation.ProcedurePermissions{
-		categoryqueryv1connect.CategoryQueryServiceGetCategoryByIdProcedure:        {"categories:read"},
-		categoryqueryv1connect.CategoryQueryServiceGetAllActiveCategoriesProcedure: {"categories:read"},
+		categoryqueryv1connect.CategoryQueryServiceGetCategoryByIdProcedure:        nil,
+		categoryqueryv1connect.CategoryQueryServiceGetAllActiveCategoriesProcedure: nil,
 	}
 }

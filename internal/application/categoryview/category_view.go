@@ -9,7 +9,7 @@ type CategoryAttribute struct {
 	AttributeID string // Reference to attribute definition (UUID)
 	Slug        string // Attribute URL-friendly identifier (immutable)
 	Role        string // variant or specification
-	SortOrder   int    // Sort order for display in this category
+	SortOrder   int32  // Sort order for display in this category
 	Filterable  bool   // Whether filterable for this category
 	Searchable  bool   // Whether searchable for this category
 }
@@ -18,7 +18,7 @@ type CategoryAttribute struct {
 // Unlike the domain Category in the command service, this is a denormalized view optimized for reads
 type CategoryView struct {
 	ID         string
-	Version    int
+	Version    int64
 	Name       string
 	Enabled    bool
 	Attributes []CategoryAttribute
@@ -27,7 +27,7 @@ type CategoryView struct {
 }
 
 // Reconstruct creates a CategoryView from persistence data
-func Reconstruct(id string, version int, name string, enabled bool, attributes []CategoryAttribute, createdAt, modifiedAt time.Time) *CategoryView {
+func Reconstruct(id string, version int64, name string, enabled bool, attributes []CategoryAttribute, createdAt, modifiedAt time.Time) *CategoryView {
 	return &CategoryView{
 		ID:         id,
 		Version:    version,

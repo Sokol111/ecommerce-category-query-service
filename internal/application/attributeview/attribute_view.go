@@ -18,14 +18,14 @@ type AttributeOption struct {
 	Slug      string  // URL-friendly identifier (immutable)
 	Name      string  // Display name
 	ColorCode *string // Hex color code for color options
-	SortOrder int     // Sort order for display
+	SortOrder int32   // Sort order for display
 }
 
 // AttributeView - read model for attribute master data (CQRS query side)
 // Used to store mutable attribute data that can be joined with category attributes at read time
 type AttributeView struct {
 	ID         string            // Unique attribute identifier (UUID)
-	Version    int               // Entity version for conflict resolution
+	Version    int64             // Entity version for conflict resolution
 	Slug       string            // URL-friendly identifier (immutable)
 	Name       string            // Display name of the attribute
 	Type       AttributeType     // Attribute type (single, multiple, range, boolean, text)
@@ -38,7 +38,7 @@ type AttributeView struct {
 // Reconstruct creates an AttributeView from persistence data
 func Reconstruct(
 	id string,
-	version int,
+	version int64,
 	slug string,
 	name string,
 	attrType AttributeType,

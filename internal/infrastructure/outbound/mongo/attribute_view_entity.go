@@ -7,13 +7,13 @@ type attributeOptionEntity struct {
 	Slug      string  `bson:"slug"`
 	Name      string  `bson:"name"`
 	ColorCode *string `bson:"colorCode,omitempty"`
-	SortOrder int     `bson:"sortOrder"`
+	SortOrder int32   `bson:"sortOrder"`
 }
 
 // attributeViewEntity represents the MongoDB document structure for attribute master data
 type attributeViewEntity struct {
 	ID         string                  `bson:"_id"`
-	Version    int                     `bson:"version"`
+	Version    int64                   `bson:"version"`
 	Slug       string                  `bson:"slug"`
 	Name       string                  `bson:"name"`
 	Type       string                  `bson:"type"`

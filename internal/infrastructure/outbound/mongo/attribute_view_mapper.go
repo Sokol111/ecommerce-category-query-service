@@ -59,11 +59,11 @@ func (m *attributeViewMapper) GetID(entity *attributeViewEntity) string {
 	return entity.ID
 }
 
-func (m *attributeViewMapper) GetVersion(entity *attributeViewEntity) int {
+func (m *attributeViewMapper) GetVersion(entity *attributeViewEntity) int64 {
 	return entity.Version
 }
 
-func (m *attributeViewMapper) SetVersion(entity *attributeViewEntity, version int) {
+func (m *attributeViewMapper) SetVersion(entity *attributeViewEntity, version int64) {
 	entity.Version = version
 }
 

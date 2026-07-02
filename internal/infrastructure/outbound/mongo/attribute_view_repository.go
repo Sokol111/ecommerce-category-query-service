@@ -36,7 +36,7 @@ func (r *attributeViewRepository) Upsert(ctx context.Context, attribute *attribu
 	if !updated {
 		logger.Get(ctx).Debug("version conflict during attribute upsert",
 			zap.String("id", attribute.ID),
-			zap.Int("version", attribute.Version))
+			zap.Int64("version", attribute.Version))
 	}
 
 	return nil

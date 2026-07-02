@@ -3,11 +3,10 @@ package kafka
 import (
 	"context"
 
-	"github.com/samber/lo"
-
-	"github.com/Sokol111/ecommerce-catalog-service-api/gen/events"
+	catalog_eventsv1 "github.com/Sokol111/ecommerce-catalog-service-api/gen/events/catalog/v1"
 	"github.com/Sokol111/ecommerce-category-query-service/internal/application/categoryview"
 	"github.com/Sokol111/ecommerce-commons/pkg/core/logger"
+	"github.com/samber/lo"
 	"go.uber.org/zap"
 )
 
@@ -21,17 +20,17 @@ func newCategoryHandler(upsertHandler categoryview.UpsertCategoryCommandHandler)
 	}
 }
 
-func (h *categoryHandler) HandleCategoryUpdated(ctx context.Context, e *events.CategoryUpdatedEvent) error {
-	attributes := mapAttributes(e.Payload.Attributes)
+func (h *categoryHandler) HandleCategoryUpdated(ctx context.Context, e *catalog_eventsv1.CategoryUpdatedEvent) error {
+	attributes := mapCategoryAttributes(e.Attributes)
 
 	view := categoryview.Reconstruct(
-		e.Payload.CategoryID,
-		e.Payload.Version,
-		e.Payload.Name,
-		e.Payload.Enabled,
+		e.CategoryId,
+		e.Version,
+		e.Name,
+		e.Enabled,
 		attributes,
-		e.Payload.CreatedAt,
-		e.Payload.ModifiedAt,
+		e.CreatedAt.AsTime().UTC(),
+		e.ModifiedAt.AsTime().UTC(),
 	)
 
 	cmd := categoryview.UpsertCategoryCommand{Category: view}
@@ -40,19 +39,18 @@ func (h *categoryHandler) HandleCategoryUpdated(ctx context.Context, e *events.C
 	}
 
 	h.log(ctx).Debug("category view updated",
-		zap.String("categoryID", e.Payload.CategoryID),
-		zap.String("eventID", e.Metadata.EventID),
-		zap.Int("version", e.Payload.Version))
+		zap.String("categoryID", e.CategoryId),
+		zap.Int64("version", e.Version))
 
 	return nil
 }
 
-func mapAttributes(eventAttrs []events.CategoryAttribute) []categoryview.CategoryAttribute {
-	return lo.Map(eventAttrs, func(attr events.CategoryAttribute, _ int) categoryview.CategoryAttribute {
+func mapCategoryAttributes(eventAttrs []*catalog_eventsv1.CategoryAttribute) []categoryview.CategoryAttribute {
+	return lo.Map(eventAttrs, func(attr *catalog_eventsv1.CategoryAttribute, _ int) categoryview.CategoryAttribute {
 		return categoryview.CategoryAttribute{
-			AttributeID: attr.AttributeID,
+			AttributeID: attr.AttributeId,
 			Slug:        attr.AttributeSlug,
-			Role:        attr.Role,
+			Role:        attr.Role.String(),
 			SortOrder:   attr.SortOrder,
 			Filterable:  attr.Filterable,
 			Searchable:  attr.Searchable,

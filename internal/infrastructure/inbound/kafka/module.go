@@ -1,7 +1,6 @@
 package kafka
 
 import (
-	"github.com/Sokol111/ecommerce-catalog-service-api/gen/events"
 	"github.com/Sokol111/ecommerce-commons/pkg/messaging/kafka/consumer"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
@@ -9,7 +8,6 @@ import (
 
 func Module() fx.Option {
 	return fx.Options(
-		events.Module(),
 		fx.Provide(newCategoryHandler, newAttributeHandler),
 		consumer.RegisterHandlerAndConsumer("category-events", newCategoryRouter),
 		consumer.RegisterHandlerAndConsumer("attribute-events", newAttributeRouter),

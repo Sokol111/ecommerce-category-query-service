@@ -63,11 +63,11 @@ func (m *categoryViewMapper) GetID(entity *categoryViewEntity) string {
 	return entity.ID
 }
 
-func (m *categoryViewMapper) GetVersion(entity *categoryViewEntity) int {
+func (m *categoryViewMapper) GetVersion(entity *categoryViewEntity) int64 {
 	return entity.Version
 }
 
-func (m *categoryViewMapper) SetVersion(entity *categoryViewEntity, version int) {
+func (m *categoryViewMapper) SetVersion(entity *categoryViewEntity, version int64) {
 	entity.Version = version
 }
 
